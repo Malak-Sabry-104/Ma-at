@@ -1,1 +1,19 @@
 @import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Fredoka:wght@300..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Gemstones&display=swap'); */
+
+/* 
+body {
+  font-family: "Archivo", sans-serif !important;
+    font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings:
+    "wdth" 100;
+} */
+
+#hero {
+  background-image: url("./assets/hero_bg.jpg");
+  background-attachment: fixed ;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center ;
+}
