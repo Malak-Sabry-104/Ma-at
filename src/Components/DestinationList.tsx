@@ -190,7 +190,9 @@ const DestinationList = () => {
           </div>
         </div>
       </section>
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 h-screen">
+
+      {/* section 5 */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 min-h-[80vh]">
         {/* Left side */}
         <div className="flex flex-col gap-4 lg:col-span-1 h-full">
           {/* Top left card */}
@@ -200,24 +202,16 @@ const DestinationList = () => {
           >
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm p-6 flex flex-col justify-between">
               <div>
-                <FaGlobe
-                  className="text-white/50 mb-8 w-[50px] h-[50px] 
-                 bg-white/20 p-3 rounded-lg "
-                />
-                <h2 className="text-white text-4xl  mb-2">
-                  Explore more to get your comfort zone
+                <FaGlobe className="text-white/50 mb-8 w-[50px] h-[50px] bg-white/20 p-3 rounded-lg" />
+                <h2 className="text-white text-4xl mb-2">
+                  Travel Beyond Limits
                 </h2>
                 <p className="text-white/80 text-md">
-                  Book your perfect stay with us.
+                  Discover Egypt’s hidden gems with comfort and style.
                 </p>
               </div>
-              <button
-                className="w-fit flex  items-center gap-3 py-3
-              cursor-pointer bg-white
-               text-black px-5 rounded-lg
-                text-sm font-medium hover:bg-gray-200 transition"
-              >
-                Booking Now <FaArrowRight />
+              <button className="w-fit flex items-center gap-3 py-3 cursor-pointer bg-white text-black px-5 rounded-lg text-sm font-medium hover:bg-gray-200 transition">
+                Start Your Journey <FaArrowRight />
               </button>
             </div>
           </div>
@@ -228,8 +222,13 @@ const DestinationList = () => {
             style={{ backgroundImage: "url('/assets/routes.png')" }}
           >
             <div className="absolute inset-0 bg-black/50 p-6 flex flex-col justify-end">
-              <p className="text-white/80 text-3xl  mb-3">Route Available</p>
-              <h3 className="text-white text-4xl font-bold">1,895</h3>
+              <p className="text-white/80 text-3xl mb-3">
+                Routes Ready to Explore
+              </p>
+              <h3 className="text-white text-4xl font-bold">1,895+</h3>
+              <p className="text-white/80 text-md mt-1">
+                Train routes connecting major Egyptian cities
+              </p>
             </div>
           </div>
         </div>
@@ -240,9 +239,15 @@ const DestinationList = () => {
           style={{ backgroundImage: "url('/assets/img.png')" }}
         >
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-center p-6">
-            <h1 className="text-white text-3xl lg:text-5xl font-semibold leading-snug max-w-3xl">
-              Beyond accommodation, creating memories of a lifetime
-            </h1>
+            <div>
+              <h1 className="text-white text-3xl lg:text-5xl font-semibold leading-snug max-w-3xl">
+                Journey. Explore. Remember.
+              </h1>
+              <p className="text-white/80 text-lg mt-4 max-w-2xl mx-auto">
+                Experience unforgettable trips across Egypt with our curated
+                train routes and cozy stays.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -251,6 +256,3 @@ const DestinationList = () => {
 };
 
 export default DestinationList;
-
-
-
