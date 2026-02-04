@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoMdPerson } from "react-icons/io";
-import { FaExchangeAlt, FaPlus, FaTrash } from "react-icons/fa";
+import { FaArrowRight, FaExchangeAlt, FaPlus, FaTrash } from "react-icons/fa";
 
 type TripType = "oneway" | "round" | "multicity";
 
@@ -55,7 +55,10 @@ const Hero = () => {
     if (multiLegs.length === 1) return; // always keep at least one leg
     setMultiLegs(multiLegs.filter((_, i) => i !== index));
   };
+  const ticketClasses = ["Luxury", "Executive", "Business", "Economy"] as const;
+  type TicketClass = (typeof ticketClasses)[number];
 
+  const [selectedClass, setSelectedClass] = useState<TicketClass>("Economy");
   return (
     <section id="hero" className="min-h-screen">
       <div className="bg-black/30 min-h-screen py-12">
@@ -63,7 +66,7 @@ const Hero = () => {
           Navigate the world by rail
         </h1>
 
-        <div className="mx-7 bg-white/10 backdrop-blur-md rounded-2xl p-6">
+        <div className="mx-7 bg-black/10 backdrop-blur-md rounded-2xl p-6">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl text-white italic font-semibold">
@@ -181,8 +184,10 @@ const Hero = () => {
                   </button>
 
                   {showPassengers && (
-                    <div className="absolute right-0  top-16 
-                     bg-white rounded-xl shadow-lg w-64 p-4 z-20">
+                    <div
+                      className="absolute right-0  top-16 
+                     bg-white rounded-xl shadow-lg w-64 p-4 z-20"
+                    >
                       <div className="flex  justify-between items-center mb-3">
                         <span>Adults</span>
                         <div className="flex gap-2 items-center">
@@ -359,6 +364,37 @@ const Hero = () => {
                 </div>
               </div>
             )}
+
+            <div className="flex flex-col gap-2 mt-4  p-2">
+              <label className="ms-3 font-medium text-gray-700">
+                Ticket Class
+              </label>
+
+              <div className="flex gap-3 flex-wrap justify-between mx-3">
+                <div className="gap-3 flex">
+                  {ticketClasses.map((cls) => (
+                    <button
+                      key={cls}
+                      onClick={() => setSelectedClass(cls)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all
+          ${
+            selectedClass === cls
+              ? "bg-black text-white"
+              : "bg-white text-gray-700 ring-1 ring-black/10 hover:bg-gray-100"
+          }`}
+                    >
+                      {cls}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  className="flex  items-center gap-2 justify-center bg-black rounded-lg
+     text-white  p-3"
+                >
+                  Search <FaArrowRight />
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

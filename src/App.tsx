@@ -1,12 +1,14 @@
-import NavBar from "./Components/NavBar";
-import Hero from "./Components/Hero";
+import { Route, Routes } from "react-router-dom";
+import Home from "./Pages/Home";
+
 const App = () => {
   return (
     <>
-    <NavBar/> 
-<Hero/> 
+    <Routes>
+      <Route element={<Home/>} path="/"/>
+    </Routes>
     </>
-)
-}
+  );
+};
 
-export default App
+export default App;
