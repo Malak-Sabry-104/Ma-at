@@ -146,7 +146,7 @@ const DestinationList = () => {
           Get promo for a cheaper price
         </h1>
         {/* Cards */}
-        <div className="flex gap-4 overflow-x-auto py-5 px-4">
+        <div className="md:flex-row flex-col flex gap-4 overflow-x-auto py-5 px-4">
           {/* Mastercard Offer */}
           <div
             className="min-w-[30%] flex 
@@ -197,20 +197,24 @@ const DestinationList = () => {
         <div className="flex flex-col gap-4 lg:col-span-1 h-full">
           {/* Top left card */}
           <div
-            className="relative h-1/2 rounded-2xl overflow-hidden bg-cover bg-center"
+            className="relative h-[300px] md:h-1/2 rounded-2xl overflow-hidden bg-cover bg-center"
             style={{ backgroundImage: "url('/assets/station.jpg')" }}
           >
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm p-6 flex flex-col justify-between">
               <div>
                 <FaGlobe className="text-white/50 mb-8 w-[50px] h-[50px] bg-white/20 p-3 rounded-lg" />
-                <h2 className="text-white text-4xl mb-2">
+                <h2 className="text-white text-2xl md:text-4xl mb-2">
                   Travel Beyond Limits
                 </h2>
                 <p className="text-white/80 text-md">
                   Discover Egypt’s hidden gems with comfort and style.
                 </p>
               </div>
-              <button className="w-fit flex items-center gap-3 py-3 cursor-pointer bg-white text-black px-5 rounded-lg text-sm font-medium hover:bg-gray-200 transition">
+              <button className="w-fit flex items-center
+               gap-3 md:py-3 cursor-pointer bg-white
+               p-2
+                text-black md:px-5 rounded-lg 
+                text-sm font-medium hover:bg-gray-200 transition">
                 Start Your Journey <FaArrowRight />
               </button>
             </div>
@@ -240,10 +244,11 @@ const DestinationList = () => {
         >
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-center p-6">
             <div>
-              <h1 className="text-white text-3xl lg:text-5xl font-semibold leading-snug max-w-3xl">
+              <h1 className="text-white text-2xl
+               md:text-3xl lg:text-5xl font-semibold leading-snug max-w-3xl">
                 Journey. Explore. Remember.
               </h1>
-              <p className="text-white/80 text-lg mt-4 max-w-2xl mx-auto">
+              <p className="text-white/80 md:text-lg mt-4 max-w-2xl mx-auto">
                 Experience unforgettable trips across Egypt with our curated
                 train routes and cozy stays.
               </p>

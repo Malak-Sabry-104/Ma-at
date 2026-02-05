@@ -34,7 +34,8 @@ const Hero = () => {
   };
 
   const buttonStyle = (type: TripType) =>
-    `px-4 py-2 rounded-lg my-3 text-sm cursor-pointer font-medium transition-all ${
+    `md:px-4 md:py-2 rounded-lg p-2 
+  my-3 text-sm cursor-pointer font-medium transition-all ${
       tripType === type
         ? "bg-black text-white"
         : "bg-white text-gray-700 hover:bg-gray-100"
@@ -60,19 +61,23 @@ const Hero = () => {
 
   const [selectedClass, setSelectedClass] = useState<TicketClass>("Economy");
   return (
-    <section id="hero" className="min-h-screen">
+    <section id="hero" className="min-h-screen overflow-hidden">
       <div className="bg-black/30 min-h-screen py-12">
-        <h1 className="pt-90 ms-4 text-white text-5xl mb-8">
+        <h1 className="md:pt-90 pt-25 ms-4 text-white md-w[100%] 
+        leading-relaxed md:leading-normal
+         w-[90%] text-4xl md:text-5xl mb-8">
           Navigate the world by rail
         </h1>
 
-        <div className="mx-7 bg-black/10 backdrop-blur-md rounded-2xl p-6">
+        <div className="md:mx-7 bg-black/10 backdrop-blur-md
+         rounded-2xl md:p-6 py-2 px-1 md:flex  flex-col">
           {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl text-white italic font-semibold">
+          <div className=" flex md:flex-row flex-col 
+        justify-between items-center  mb-6">
+            <h2 className="md:text-2xl md:pt-0 pt-2 text-white italic font-semibold">
               Find Your Train Journey
             </h2>
-            <div className="flex gap-3">
+            <div className="flex gap-3  ">
               <button
                 onClick={() => setTripType("oneway")}
                 className={buttonStyle("oneway")}
@@ -94,10 +99,13 @@ const Hero = () => {
             </div>
           </div>
           {/* Booking Bar */}
-          <div className="flex flex-col gap-4 bg-white/80 rounded-xl p-4 relative">
+          <div className="flex flex-col gap-4 
+           bg-white/80 rounded-xl p-4 relative">
             {/* Oneway / Round logic */}
             {(tripType === "oneway" || tripType === "round") && (
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex 
+               flex-wrap items-center md:justify-start
+                justify-center gap-3">
                 <div className="input-wrapper flex flex-col">
                   <label htmlFor="from" className="mb-2">
                     From
@@ -114,7 +122,7 @@ const Hero = () => {
 
                 <button
                   onClick={swapStations}
-                  className="w-10 h-10 rounded-full mt-7
+                  className="w-10 h-10 rounded-full md:mt-7
           ring-3 ring-black/10 cursor-pointer flex 
           items-center justify-center hover:bg-gray-100
           transition-transform duration-300"
@@ -139,7 +147,7 @@ const Hero = () => {
                   />
                 </div>
 
-                <div className="input-wrapper flex flex-col">
+                <div className="input-wrapper  flex flex-col">
                   <label htmlFor="departure" className="mb-2">
                     Departure
                   </label>
@@ -152,7 +160,7 @@ const Hero = () => {
                 </div>
 
                 {tripType === "round" && (
-                  <div className="input-wrapper flex flex-col">
+                  <div className="input-wrapper  flex flex-col">
                     <label htmlFor="return" className="mb-2">
                       Return
                     </label>
@@ -231,139 +239,176 @@ const Hero = () => {
               </div>
             )}
 
-            {/* Multi-city logic */}
-            {tripType === "multicity" && (
-              <div
-                className="flex w-[50%] items-center
-                mx-auto flex-col p-2 gap-4"
-              >
-                <div className=" p-2">
-                  {multiLegs.map((leg, index) => (
-                    <div key={index} className="flex mb-2 items-center gap-3">
-                      <div className="input-wrapper flex flex-col">
-                        <label>From</label>
-                        <input
-                          className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
-                          placeholder="Origin station"
-                          value={leg.from}
-                          onChange={(e) =>
-                            updateLeg(index, "from", e.target.value)
-                          }
-                        />
-                      </div>
+        {/* Multi-city logic */}
+{tripType === "multicity" && (
+  <div
+    className="
+      flex w-full lg:w-1/2
+      mx-auto flex-col
+      p-4 gap-6
+    "
+  >
+    {/* Legs */}
+    <div className="space-y-4">
+      {multiLegs.map((leg, index) => (
+        <div
+          key={index}
+          className="
+            flex flex-col md:flex-row
+            gap-3 items-center justify-center 
+            bg-white/50 rounded-xl p-3
+          "
+        >
+          {/* From */}
+          <div className="input-wrapper flex flex-col w-full lg:w-1/4">
+            <label>From</label>
+            <input
+              className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
+              placeholder="Origin station"
+              value={leg.from}
+              onChange={(e) =>
+                updateLeg(index, "from", e.target.value)
+              }
+            />
+          </div>
 
-                      <div className="input-wrapper flex flex-col">
-                        <label>To</label>
-                        <input
-                          className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
-                          placeholder="Destination station"
-                          value={leg.to}
-                          onChange={(e) =>
-                            updateLeg(index, "to", e.target.value)
-                          }
-                        />
-                      </div>
+          {/* To */}
+          <div className="input-wrapper flex flex-col w-full lg:w-1/4">
+            <label>To</label>
+            <input
+              className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
+              placeholder="Destination station"
+              value={leg.to}
+              onChange={(e) =>
+                updateLeg(index, "to", e.target.value)
+              }
+            />
+          </div>
 
-                      <div className="input-wrapper flex flex-col">
-                        <label>Departure</label>
-                        <input
-                          type="date"
-                          className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
-                          value={leg.departureDate}
-                          onChange={(e) =>
-                            updateLeg(index, "departureDate", e.target.value)
-                          }
-                        />
-                      </div>
+          {/* Date */}
+          <div className="input-wrapper flex flex-col w-full lg:w-1/4">
+            <label>Departure</label>
+            <div className="flex justify-between gap-3 items-center ">
 
-                      <button
-                        onClick={() => removeLeg(index)}
-                        className="mt-6 text-red-500 hover:text-red-700"
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-
-                <div
-                  className="flex gap-8 py-2 items-center
-                 justify-between  px-12.5"
-                >
-                  <button
-                    onClick={addLeg}
-                    className="flex items-center gap-2 mt-2
-                     text-blue-500 hover:text-blue-700"
-                  >
-                    <FaPlus /> Add another flight
-                  </button>
-
-                  {/* Passengers for multi-city */}
-                  <div className="relative flex flex-col w-25 mt-2">
-                    <label htmlFor="passengers" className="mb-2">
-                      Passengers
-                    </label>
-                    <button
-                      id="passengers"
-                      onClick={() => setShowPassengers(!showPassengers)}
-                      className="w-42.5 flex justify-center input rounded-lg 
-                      ring-3 ring-black/10 items-center gap-2 p-2 cursor-pointer"
-                    >
-                      <IoMdPerson />
-                      {adults} adult{adults > 1 && "s"}
-                      {infants > 0 && `, ${infants} infant`}
-                    </button>
-
-                    {showPassengers && (
-                      <div
-                        className="absolute right-0 top-14 bg-
-                     rounded-xl shadow-lg  w-64 p-4 z-20 bg-white mt-6"
-                      >
-                        <div className="flex justify-between items-center mb-3">
-                          <span>Adults</span>
-                          <div className="flex gap-2 items-center">
-                            <button
-                              onClick={() => setAdults(Math.max(1, adults - 1))}
-                              className="counter-btn cursor-pointer"
-                            >
-                              −
-                            </button>
-                            <span>{adults}</span>
-                            <button
-                              onClick={() => setAdults(adults + 1)}
-                              className="counter-btn cursor-pointer"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="flex justify-between items-center">
-                          <span>Infants</span>
-                          <div className="flex gap-2 items-center">
-                            <button
-                              onClick={() =>
-                                setInfants(Math.max(0, infants - 1))
-                              }
-                              className="counter-btn cursor-pointer"
-                            >
-                              −
-                            </button>
-                            <span>{infants}</span>
-                            <button
-                              onClick={() => setInfants(infants + 1)}
-                              className="counter-btn cursor-pointer"
-                            >
-                              +
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
+        
+            <input
+              type="date"
+              className="input ring-3 ring-black/10
+               p-2 rounded-lg focus:outline-0 w-[90%]"
+              value={leg.departureDate}
+              onChange={(e) =>
+                updateLeg(index, "departureDate", e.target.value)
+              }
+            />
+            {/* Remove */}
+          <button
+            onClick={() => removeLeg(index)}
+            className="
+              text-red-500 hover:text-red-700
+               bg-white/20 rounded-md shadow p-2  
+            "
+          >
+            <FaTrash />
+          </button>
               </div>
-            )}
+          </div>
+
+          
+        </div>
+      ))}
+    </div>
+
+    {/* Bottom Controls */}
+    <div
+      className="
+        flex flex-col md:flex-row
+        gap-4 items-start md:items-center
+        justify-between
+      "
+    >
+      {/* Add Leg */}
+      <button
+        onClick={addLeg}
+        className="
+          flex items-center gap-2
+          text-blue-500 hover:text-blue-700
+        "
+      >
+        <FaPlus /> Add another flight
+      </button>
+
+      {/* Passengers */}
+      <div className="relative flex flex-col w-full md:w-56">
+        <label className="mb-2">Passengers</label>
+        <button
+          onClick={() => setShowPassengers(!showPassengers)}
+          className="
+            flex justify-center items-center gap-2
+            input rounded-lg ring-3 ring-black/10
+            p-2 w-full
+          "
+        >
+          <IoMdPerson />
+          {adults} adult{adults > 1 && "s"}
+          {infants > 0 && `, ${infants} infant`}
+        </button>
+
+        {showPassengers && (
+          <div
+            className="
+              absolute right-0 top-full mt-2
+              bg-white rounded-xl shadow-lg
+              w-full md:w-64 p-4 z-20
+            "
+          >
+            {/* Adults */}
+            <div className="flex justify-between items-center mb-3">
+              <span>Adults</span>
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={() => setAdults(Math.max(1, adults - 1))}
+                  className="counter-btn"
+                >
+                  −
+                </button>
+                <span>{adults}</span>
+                <button
+                  onClick={() => setAdults(adults + 1)}
+                  className="counter-btn"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+
+            {/* Infants */}
+            <div className="flex justify-between items-center">
+              <span>Infants</span>
+              <div className="flex gap-2 items-center">
+                <button
+                  onClick={() =>
+                    setInfants(Math.max(0, infants - 1))
+                  }
+                  className="counter-btn"
+                >
+                  −
+                </button>
+                <span>{infants}</span>
+                <button
+                  onClick={() => setInfants(infants + 1)}
+                  className="counter-btn"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
 
             <div className="flex flex-col gap-2 mt-4  p-2">
               <label className="ms-3 font-medium text-gray-700">
@@ -371,12 +416,14 @@ const Hero = () => {
               </label>
 
               <div className="flex gap-3 flex-wrap justify-between mx-3">
-                <div className="gap-3 flex">
+                <div className="gap-3 flex  flex-wrap justify-center 
+                items-center px-2">
                   {ticketClasses.map((cls) => (
                     <button
                       key={cls}
                       onClick={() => setSelectedClass(cls)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all
+                      className={`px-4 py-2 
+                         rounded-lg text-sm font-medium transition-all
           ${
             selectedClass === cls
               ? "bg-black text-white"
@@ -388,8 +435,9 @@ const Hero = () => {
                   ))}
                 </div>
                 <button
-                  className="flex  items-center gap-2 justify-center bg-black rounded-lg
-     text-white  p-3"
+                  className="flex  items-center gap-2 
+                  justify-center bg-black rounded-lg
+     text-white  p-3 md:w-37.5  w-full"
                 >
                   Search <FaArrowRight />
                 </button>

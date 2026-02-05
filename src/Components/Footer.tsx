@@ -2,94 +2,92 @@ import textLogo from "/src/assets/logo-english.png";
 import imglogo from "../assets/train-station.png";
 import { FaFacebook, FaInstagram, FaTiktok } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from "react-router-dom";
+
 const Footer = () => {
   return (
-    <>
-      <footer
-        className="bg-black 
-       h-[33vh] p-4 text-white "
-      >
-        <div className="flex  justify-between">
-          <div>
-            <a
-              href="/"
-              className="flex items-center mb-4 gap-3 hover:opacity-90 transition"
-            >
-              <img src={imglogo} className="w-7 h-7" />
-              <img src={textLogo} className="w-19" />
-            </a>
-            <p className="w-[300px] text-gray-300 text-[15px] tracking-wide mt-4">
-              Our mission is to provide modern travelers with safe, comfortable,
-              and seamless train journeys across Egypt, making every trip
-              memorable.
-            </p>
-          </div>
-          <ul>
-            <li className="text-xl mb-5 font-semibold ">About</li>
-            <li className="mb-4 text-gray-300 italic">
-              <a href="#">About Us</a>
-            </li>
-            <li className="mb-4 text-gray-300 italic">
-              <a href="#">Contact Us</a>
-            </li>
-          </ul>
-          <div>
-            <h3 className="text-xl mb-3 mb-5 font-semibold">Get Updates </h3>
-            <div className="gap-4 flex  items-center  ">
-              <input
-                type="email"
-                className="bg-white/30 focus:outline-none
-             py-2 px-4 rounded-lg ring-2  ring-white/40"
-                placeholder="Enter Your Email"
-                name="email"
-              />
-              <button
-                type="button"
-                className=" w-22.5 cursor-pointer
-           rounded-lg text-black bg-white p-2"
-              >
-                Subscribe
-              </button>
-            </div>
-            <div className="icons flex  justify-center gap-3 mt-8 ">
-              <a href="#">
-                <FaFacebook
-                  className="bg-white/30 w-10 h-10 
-              rounded-full p-2"
-                />
-              </a>
-              <a href="#">
-                {" "}
-                <FaInstagram
-                  className="bg-white/30 w-10 h-10 
-              rounded-full p-2"
-                />
-              </a>
-              <a href="#">
-                <FaTiktok
-                  className="bg-white/30 w-10 h-10 
-              rounded-full p-2"
-                />
-              </a>
-              <a href="#">
-                <FaXTwitter
-                  className="bg-white/30 w-10 h-10 
-              rounded-full p-2"
-                />
-              </a>
-            </div>
-          </div>
+    <footer className="bg-black text-white px-6 py-12">
+      {/* Top Section */}
+      <div className="flex flex-col lg:flex-row gap-12 lg:gap-0 justify-between">
+        {/* Brand */}
+        <div className="max-w-md">
+          <Link
+            to="/"
+            className="flex items-center gap-3 hover:opacity-90 transition"
+          >
+            <img src={imglogo} className="w-7 h-7" />
+            <img src={textLogo} className="w-24" />
+          </Link>
+
+          <p className="text-gray-300 text-sm tracking-wide mt-4 leading-relaxed">
+            Our mission is to provide modern travelers with safe, comfortable,
+            and seamless train journeys across Egypt, making every trip
+            memorable.
+          </p>
         </div>
 
-        <div className="flex justify-between items-center my-5 ">
-          <p className="tracking-wide">&copy; 2026 All Right reserved. </p>
-          <div className="gap-4 flex items-center ">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms Of Service</a>
+        {/* Links */}
+        <ul className="text-sm">
+          <li className="text-lg mb-4 font-semibold">About</li>
+          <li className="mb-3 text-gray-300 hover:text-white transition">
+            <Link to="/about">About Us</Link>
+          </li>
+          <li className="mb-3 text-gray-300 hover:text-white transition">
+            <Link to="/contact">Contact Us</Link>
+          </li>
+        </ul>
+
+        {/* Subscribe */}
+        <div className="max-w-md w-full">
+          <h3 className="text-lg mb-4 font-semibold">Get Updates</h3>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            <input
+              type="email"
+              className="w-full
+               bg-white/20 focus:outline-none
+                py-2 px-4 rounded-lg ring-1 mb-2
+                 ring-white/30 placeholder:text-gray-300"
+              placeholder="Enter your email"
+              name="email"
+            />
+            <button
+              type="button"
+              className="sm:w-auto w-full rounded-lg text-black bg-white px-6 py-2 font-medium hover:bg-gray-200 transition"
+            >
+              Subscribe
+            </button>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex gap-3 mt-6 sm:justify-start justify-center">
+            {[FaFacebook, FaInstagram, FaTiktok, FaXTwitter].map(
+              (Icon, i) => (
+                <Link key={i} to="#">
+                  <Icon className="w-10 h-10 p-2 rounded-full bg-white/20 hover:bg-white hover:text-black transition" />
+                </Link>
+              )
+            )}
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+
+      {/* Divider */}
+      <div className="h-px bg-white/10 my-8" />
+
+      {/* Bottom Bar */}
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center text-sm text-gray-300">
+        <p>&copy; 2026 All rights reserved.</p>
+        <div className="flex gap-6">
+          <Link className="hover:text-white transition" to="#">
+            Privacy Policy
+          </Link>
+          <Link className="hover:text-white transition" to="#">
+            Terms of Service
+          </Link>
+        </div>
+      </div>
+    </footer>
   );
 };
 
