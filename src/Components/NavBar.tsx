@@ -180,9 +180,9 @@ const NavBar = () => {
         <Link to="/login" className="md:block hidden px-4 py-2  rounded-full bg-white text-black">
           Log In
         </Link>
-        <Link to="/sign-up" className="p-2 md:px-4 md:py-2
+        <Link to="/register" className="p-2 md:px-4 md:py-2
          md:rounded-full rounded-lg bg-white text-black">
-          Sign Up
+          Register
         </Link>
         {/* Mobile menu button */}
         <div className="md:hidden flex flex-col">
