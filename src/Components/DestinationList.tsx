@@ -222,7 +222,7 @@ const DestinationList = () => {
 
           {/* Bottom left card */}
           <div
-            className="relative h-1/2 rounded-2xl overflow-hidden bg-cover bg-center"
+            className="relative h-[350px] md:h-1/2 rounded-2xl overflow-hidden bg-cover bg-center"
             style={{ backgroundImage: "url('/assets/routes.png')" }}
           >
             <div className="absolute inset-0 bg-black/50 p-6 flex flex-col justify-end">
@@ -239,7 +239,8 @@ const DestinationList = () => {
 
         {/* Right side */}
         <div
-          className="relative lg:col-span-2 rounded-2xl overflow-hidden bg-cover bg-center"
+          className="relative lg:col-span-2
+           rounded-2xl h-[350px] overflow-hidden bg-cover bg-center"
           style={{ backgroundImage: "url('/assets/img.png')" }}
         >
           <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-center p-6">
