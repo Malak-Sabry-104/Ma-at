@@ -10,8 +10,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Aboutt() {
   return (
-    <div className="app-main relative min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
-      <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.15)_0px,transparent_70px),radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.12)_0px,transparent_90px),radial-gradient(circle_at_40%_70%,rgba(255,255,255,0.12)_0px,transparent_80px)] backdrop-blur-[1px]"></div>
+    <div className="app-main relative min-h-screen bg-linear-to-b
+     from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      <div className="absolute inset-0 z-10 pointer-events-none 
+      bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.15)_0px,transparent_70px),radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.12)_0px,transparent_90px),radial-gradient(circle_at_40%_70%,rgba(255,255,255,0.12)_0px,transparent_80px)] backdrop-blur-[1px]"></div>
 
       {/* 3D Canvas */}
       <div className="canvas-wrapper w-full h-screen fixed top-0 left-0 z-0">
@@ -27,17 +29,22 @@ export default function Aboutt() {
       </div>
 
       {/* Scrollable Content */}
-      <div className="scroll-container relative z-10 max-w-6xl mx-auto px-6 md:px-16 py-32 space-y-40">
+      <div className="scroll-container relative z-10
+       max-w-6xl mx-auto px-6 md:px-16 py-32 md:space-y-40 space-y-30">
         <NavBar/>
         {/* Header */}
-        <section className="text-left space-y-6 md:space-y-8">
-          <h1 className="about-font text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+        <section className="text-left space-y-6 md:space-y-7">
+          <h1 className="about-font md:text-8xl text-7xl
+           font-extrabold text-transparent
+            bg-clip-text bg-linear-to-r
+             from-indigo-400 to-cyan-400 tracking-wide">
             What is <span className="text-indigo-300">Ma’at?</span>
           </h1>
         </section>
         {/* About Ma’at Team */}
         <section className="space-y-6 md:space-y-8">
-          <p className="italic text-gray-300  text-lg md:text-xl max-w-2xl leading-relaxed">
+          <p className="italic text-gray-300 
+           text-lg md:text-xl max-w-2xl leading-relaxed">
             We are the
             <span className=" italic text-indigo-400 font-semibold">
               Ma’at team
@@ -49,7 +56,10 @@ export default function Aboutt() {
         </section>
         {/* Why We Exist */}
         <section className="space-y-6 md:space-y-8">
-          <h2 className="about-font text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+          <h2 className="about-font text-5xl md:text-6xl
+           font-extrabold text-transparent bg-clip-text 
+           bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide
+           md:leading-normal leading-relaxed">
             Why we Are<span className="text-indigo-300"> Exist</span>
           </h2>
           <p className="text-gray-300 text-lg leading-relaxed">
@@ -65,11 +75,11 @@ export default function Aboutt() {
         {/* Our Solution */}
         <section className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-1 space-y-6">
-            <h2 className="about-font text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+            <h2 className="about-font md:text-6xl text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
               Our <span className="text-indigo-300">Solution</span>
             </h2>
 
-            <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
+            <p className="text-gray-300 text-md md:text-xl leading-relaxed">
               Ma’at is a
               <span className="text-indigo-400 font-semibold">
                 smart, human-centered system installed inside trains
@@ -78,7 +88,7 @@ export default function Aboutt() {
               passenger movement and integrates with a mobile app and web
               platform.
             </p>
-            <ul className="text-gray-300 space-y-2 text-lg list-none">
+            <ul className="text-gray-300 space-y-2 text-md md:text-lg list-none">
               <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
                 See which carriages and doors are less crowded
               </li>
@@ -93,10 +103,10 @@ export default function Aboutt() {
           <div></div> {/* Empty for 3D model */}
         </section>
         {/* Our Goals */}
-        <section className="relative">
+        <section className="relative md:block hidden">
           {" "}
           <h2 className="about-font text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
-            Our <span className="text-indigo-300">Solution</span>
+            Our <span className="text-indigo-300">Goals</span>
           </h2>
           <div className="grid md:grid-cols-5 gap-8 items-center">
             <div
@@ -151,6 +161,65 @@ export default function Aboutt() {
               </p>
             </div>
           </div>
+        </section>
+        {/* Our Goals */}
+        <section className="md:hidden">
+          <h2 className="about-font text-center 
+          text-5xl font-extrabold text-transparent
+           bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+            Our <span className="text-indigo-300">Goals</span>
+          </h2>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+            
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20
+            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
+            transition transform hover:-translate-y-1 w-full">
+              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
+                Reduce Congestion
+              </h3>
+              <p className="text-gray-300 text-sm sm:text-base">
+                Minimize crowding at train doors for faster boarding.
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20
+            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
+            transition transform hover:-translate-y-1 w-full">
+              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
+                Easier Boarding
+              </h3>
+              <p className="text-gray-300 text-sm sm:text-base">
+                Make entering trains smooth and comfortable for everyone.
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20
+            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
+            transition transform hover:-translate-y-1 w-full">
+              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
+                Shorter Stops
+              </h3>
+              <p className="text-gray-300 text-sm sm:text-base">
+                Reduce train dwell times at stations efficiently.
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-lg border border-white/20
+            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
+            transition transform hover:-translate-y-1 w-full">
+              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
+                Calmer Experience
+              </h3>
+              <p className="text-gray-300 text-sm sm:text-base">
+                Provide a more peaceful and organized journey.
+              </p>
+            </div>
+
+          </div>
+        </section>
+        <section className="h-[30vh] md:hidden">
+
         </section>
       </div>
     </div>
