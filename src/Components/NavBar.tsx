@@ -177,10 +177,10 @@ const NavBar = () => {
 
       {/* Right side */}
       <div className="flex items-center gap-4">
-        <Link to="#" className="md:block hidden px-4 py-2  rounded-full bg-white text-black">
+        <Link to="/login" className="md:block hidden px-4 py-2  rounded-full bg-white text-black">
           Log In
         </Link>
-        <Link to="#" className="p-2 md:px-4 md:py-2
+        <Link to="/sign-up" className="p-2 md:px-4 md:py-2
          md:rounded-full rounded-lg bg-white text-black">
           Sign Up
         </Link>
@@ -266,7 +266,7 @@ const NavBar = () => {
       </li>
       <li className="w-full px-6 pt-4">
   <Link
-    to="#"
+    to="/login"
     className="block w-full text-center py-3 rounded-lg md:rounded-full bg-white text-black font-medium"
     onClick={() => setIsOpen(false)}
   >

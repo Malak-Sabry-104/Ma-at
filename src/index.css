@@ -41,3 +41,8 @@ body {
 .fade-away-now {
   opacity: 0;
 }
+.login-bg{
+  background-image: url("../src/assets/welcome-bg.png");
+  background-repeat: no-repeat;
+background-size: cover;
+}
