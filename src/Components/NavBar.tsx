@@ -1,21 +1,52 @@
 import textLogo from "/src/assets/logo-english.png";
 import imglogo from "../assets/train-station.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Ticket, Tag, Upload, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const NavBar = () => {
   const [inboxes, setInboxes] = useState(false);
+  const Location = useLocation();
+  const [navCustomClasses, setNavCustomClasses] = useState('');
+  const [scrollY, setScrollY] = useState(0)
+
+  useEffect(() => {
+    if (Location.pathname == '/about') {
+      setNavCustomClasses("fade-away-nav");
+    } else {
+      setNavCustomClasses("");
+    }
+  }, [])
+
+  const handleScroll = () => {
+    setScrollY(document.documentElement.scrollTop + document.body.scrollTop);
+    if (document.documentElement.scrollTop + document.body.scrollTop > 100 && Location.pathname == '/about') {
+      setNavCustomClasses("fade-away-nav fade-away-now")
+    } else {
+      setNavCustomClasses("fade-away-nav")
+    }
+  };
+
+  useEffect(() => {
+    // Set initial position
+    handleScroll(); 
+    
+    // Add event listener on mount
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [])
 
   return (
     <nav
-      className="
+      className={`
         py-4 fixed top-0 left-0 right-0 z-50
         bg-black/40 backdrop-blur-md
         text-white
         flex items-center justify-between
-        px-6
-      "
+        px-6 ` + navCustomClasses}
     >
       {/* Left side */}
       <ul className="flex items-center gap-8 relative">
@@ -32,7 +63,7 @@ const NavBar = () => {
         <li className="relative">
           <button
             onClick={() => setInboxes(!inboxes)}
-            className="hover:opacity-80 transition relative"
+            className="hover:opacity-80 cursor-pointer transition relative"
           >
             Inbox
             {/* notification dot */}

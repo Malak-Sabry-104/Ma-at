@@ -4,6 +4,7 @@ import { useGLTF, Environment, ContactShadows } from "@react-three/drei";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
+import NavBar from "../Components/NavBar";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -27,6 +28,7 @@ export default function Aboutt() {
 
       {/* Scrollable Content */}
       <div className="scroll-container relative z-10 max-w-6xl mx-auto px-6 md:px-16 py-32 space-y-40">
+        <NavBar/>
         {/* Header */}
         <section className="text-left space-y-6 md:space-y-8">
           <h1 className="about-font text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
