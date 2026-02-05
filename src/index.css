@@ -1,5 +1,17 @@
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Baloo+2:wght@400..800&family=Fredoka:wght@300..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Rubik+Gemstones&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap');
+
+
+
+
 @import "tailwindcss";
+
+.about-font{
+   font-family: "Bungee Outline", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
 /*any import should come before tailwind import*/
 
 body {

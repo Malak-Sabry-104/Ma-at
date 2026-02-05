@@ -9,7 +9,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Aboutt() {
   return (
-    <div className="app-main relative min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+    <div className="app-main relative min-h-screen bg-linear-to-b from-gray-900 via-gray-800 to-gray-900 text-white overflow-hidden">
+      <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_20%_30%,rgba(255,255,255,0.15)_0px,transparent_70px),radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.12)_0px,transparent_90px),radial-gradient(circle_at_40%_70%,rgba(255,255,255,0.12)_0px,transparent_80px)] backdrop-blur-[1px]"></div>
+
       {/* 3D Canvas */}
       <div className="canvas-wrapper w-full h-screen fixed top-0 left-0 z-0">
         <Canvas shadows camera={{ position: [0, 0, 15], fov: 35 }}>
@@ -27,24 +29,26 @@ export default function Aboutt() {
       <div className="scroll-container relative z-10 max-w-6xl mx-auto px-6 md:px-16 py-32 space-y-40">
         {/* Header */}
         <section className="text-left space-y-6 md:space-y-8">
-          <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 tracking-wide">
+          <h1 className="about-font text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
             What is <span className="text-indigo-300">Ma’at?</span>
           </h1>
         </section>
         {/* About Ma’at Team */}
         <section className="space-y-6 md:space-y-8">
-          <p className="text-gray-300 text-lg md:text-xl max-w-2xl leading-relaxed">
-            We are the{" "}
-            <span className="text-indigo-400 font-semibold">Ma’at team</span>,
-            making train travel smoother and more organized. Our name comes from{" "}
-            <span className="italic text-cyan-300">Maat</span>, the ancient
-            Egyptian concept of balance, order, and harmony.
+          <p className="italic text-gray-300  text-lg md:text-xl max-w-2xl leading-relaxed">
+            We are the
+            <span className=" italic text-indigo-400 font-semibold">
+              Ma’at team
+            </span>
+            , making train travel smoother and more organized. Our name comes
+            from <span className="italic text-indigo-500">Maat</span>, the
+            ancient Egyptian concept of balance, order, and harmony.
           </p>
         </section>
         {/* Why We Exist */}
         <section className="space-y-6 md:space-y-8">
-          <h2 className="text-3xl md:text-4xl font-semibold text-white tracking-wide">
-            Why We Exist
+          <h2 className="about-font text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+            Why we Are<span className="text-indigo-300"> Exist</span>
           </h2>
           <p className="text-gray-300 text-lg leading-relaxed">
             Train travel can be challenging: passengers often crowd near certain
@@ -59,11 +63,12 @@ export default function Aboutt() {
         {/* Our Solution */}
         <section className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-1 space-y-6">
-            <h2 className="text-3xl md:text-4xl font-semibold text-white mb-4">
-              Our Solution
+            <h2 className="about-font text-3xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+              Our <span className="text-indigo-300">Solution</span>
             </h2>
+
             <p className="text-gray-300 text-lg md:text-xl leading-relaxed">
-              Ma’at is a{" "}
+              Ma’at is a
               <span className="text-indigo-400 font-semibold">
                 smart, human-centered system installed inside trains
               </span>
@@ -71,61 +76,79 @@ export default function Aboutt() {
               passenger movement and integrates with a mobile app and web
               platform.
             </p>
-            <ul className="list-disc list-inside text-gray-300 space-y-2 text-lg">
-              <li>See which carriages and doors are less crowded</li>
-              <li>Board efficiently and comfortably</li>
-              <li>Enjoy a calmer, more organized journey</li>
+            <ul className="text-gray-300 space-y-2 text-lg list-none">
+              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
+                See which carriages and doors are less crowded
+              </li>
+              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
+                Board efficiently and comfortably
+              </li>
+              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
+                Enjoy a calmer, more organized journey
+              </li>
             </ul>
           </div>
           <div></div> {/* Empty for 3D model */}
         </section>
-        {/* Our Goals */}{" "}
+        {/* Our Goals */}
         <section className="relative">
           {" "}
-          <h2 className="text-3xl font-semibold text-white text-center mb-12">
-            Our Goals
-          </h2>{" "}
+          <h2 className="about-font text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+            Our <span className="text-indigo-300">Solution</span>
+          </h2>
           <div className="grid md:grid-cols-5 gap-8 items-center">
-            {" "}
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-1 w-[300px]">
-              {" "}
+            <div
+              className="bg-white/10 bg-blur-lg border border-white/20
+             p-8 rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-1 w-75"
+            >
               <h3 className="font-bold text-xl mb-2 text-white">
                 Reduce Congestion
-              </h3>{" "}
+              </h3>
               <p className="text-gray-300 text-lg">
                 Minimize crowding at train doors for faster boarding.
-              </p>{" "}
-            </div>{" "}
+              </p>
+            </div>
             <div className="col-start-5 col-span-3"></div>{" "}
-            <div className="bg-gray-800 p-8 w-[300px] rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-5">
-              {" "}
+            <div
+              className="bg-white/10 bg-blur-lg border border-white/20
+            p-8 w-75 rounded-2xl
+             shadow-lg hover:shadow-indigo-500 transition 
+             transform hover:-translate-y-1 col-start-5"
+            >
               <h3 className="font-bold text-xl mb-2 text-white">
                 Easier Boarding
-              </h3>{" "}
+              </h3>
               <p className="text-gray-300 text-lg">
                 Make entering trains smooth and comfortable for everyone.
-              </p>{" "}
-            </div>{" "}
-            <div className="bg-gray-800 p-8 rounded-2xl shadow-lg w-[300px] hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-1">
-              {" "}
+              </p>
+            </div>
+            <div
+              className="bg-white/10 bg-blur-lg border border-white/20 p-8  
+            rounded-2xl shadow-lg w-75 hover:shadow-indigo-500 
+            transition transform hover:-translate-y-1 col-start-1"
+            >
               <h3 className="font-bold text-xl mb-2 text-white">
                 Shorter Stops
-              </h3>{" "}
+              </h3>
               <p className="text-gray-300 text-lg">
                 Reduce train dwell times at stations efficiently.
-              </p>{" "}
-            </div>{" "}
+              </p>
+            </div>
             <div className="col-start-5 col-span-1"></div>{" "}
-            <div className="bg-gray-800 w-[300px] p-8 rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-5">
-              {" "}
+            <div
+              className="bg-white/10 bg-blur-lg border border-white/20
+             w-75 p-8 rounded-2xl
+             shadow-lg hover:shadow-indigo-500 transition 
+             transform hover:-translate-y-1 col-start-5"
+            >
               <h3 className="font-bold text-xl mb-2 text-white">
                 Calmer Experience
-              </h3>{" "}
+              </h3>
               <p className="text-gray-300 text-lg">
                 Provide a more peaceful and organized journey.
-              </p>{" "}
-            </div>{" "}
-          </div>{" "}
+              </p>
+            </div>
+          </div>
         </section>
       </div>
     </div>

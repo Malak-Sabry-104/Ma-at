@@ -2,6 +2,7 @@ import textLogo from "/src/assets/logo-english.png";
 import imglogo from "../assets/train-station.png";
 import { useState } from "react";
 import { Ticket, Tag, Upload, CheckCircle } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const [inboxes, setInboxes] = useState(false);
@@ -18,13 +19,13 @@ const NavBar = () => {
     >
       {/* Left side */}
       <ul className="flex items-center gap-8 relative">
-        <a href="/" className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <img src={imglogo} className="w-10 h-10" />
           <img src={textLogo} className="w-24" />
-        </a>
+        </Link>
 
         <li>
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
         </li>
 
         {/* Inbox dropdown */}
@@ -120,18 +121,20 @@ const NavBar = () => {
         </li>
 
         <li>
-          <a href="#">About</a>
+          <a href="/about">About</a>
         </li>
 
         <li>
-          <a href="#">Contact</a>
+          <Link to="#">Contact</Link>
         </li>
       </ul>
 
       {/* Right side */}
       <div className="flex items-center gap-4">
-        <a className="px-4 py-2 rounded-full bg-white text-black">Log In</a>
-        <a className="px-4 py-2 rounded-full bg-white text-black">Sign Up</a>
+        <Link to="#"
+         className="px-4 py-2 rounded-full bg-white text-black">Log In</Link>
+        <Link to="#"
+         className="px-4 py-2 rounded-full bg-white text-black">Sign Up</Link>
       </div>
     </nav>
   );
