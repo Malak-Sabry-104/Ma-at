@@ -87,7 +87,11 @@ export default function Aboutt() {
         {/* Our Solution */}
         <section className="grid md:grid-cols-2 gap-16 items-center">
           <div className="order-1 space-y-6">
-            <h2 className="about-font md:text-6xl text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
+            <h2 className="about-font md:text-6xl 
+            text-5xl font-extrabold text-transparent 
+            
+            bg-clip-text bg-linear-to-r from-indigo-400 
+            to-cyan-400 tracking-wide">
               Our <span className="text-indigo-300">Solution</span>
             </h2>
 
