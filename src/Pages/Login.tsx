@@ -39,7 +39,11 @@ const Login = () => {
 
           {/* Right side */}
           <div className="right h-[70%] w-full md:w-[50%]">
-            <div className="h-full rounded-tr-2xl rounded-br-2xl rtl:md:rounded-tr-0 rtl:md:rounded-tl-2xl rtl:md:rounded-br-0 rtl:md:rounded-bl-2xl bg-gray-100 flex flex-col justify-between px-10 py-8">
+            <div className="h-full rounded-tr-2xl
+             rounded-br-2xl rtl:md:rounded-tr-0
+              rtl:md:rounded-tl-2xl rtl:md:rounded-br-0
+               rtl:md:rounded-bl-2xl bg-gray-100 flex
+                flex-col justify-between px-10 py-2">
 
               {/* Title */}
               <h1 className="text-4xl mb-4 font-bold text-slate-800 text-center">
@@ -62,9 +66,11 @@ const Login = () => {
                 </div>
 
                 {/* Password */}
-                <div className="flex mx-4 items-center  bg-white rounded-2xl px-4 py-3 shadow-sm">
+                <div className="flex mx-4 items-center 
+                 bg-white rounded-2xl px-4 py-3 shadow-sm">
                   {/* Lock Icon */}
-                  <FaLock className="text-teal-500 ltr:mr-3 rtl:ml-3 w-4 h-4 flex-shrink-0" />
+                  <FaLock className="text-teal-500 
+                  ltr:mr-3 rtl:ml-3 w-4 h-4 flex-shrink-0" />
 
                   {/* Input */}
                   <input
@@ -86,21 +92,23 @@ const Login = () => {
                 {/* Forgot */}
                 <Link
                   to="#"
-                  className="block text-center px-2 py-1 text-gray-500 text-sm cursor-pointer hover:underline"
+                  className="block 
+                   m-0 text-center px-2 py-1
+                    text-gray-500 text-sm cursor-pointer hover:underline"
                 >
                   {t("auth.forgotPassword")}
                 </Link>
 
                 {/* Login button */}
                 <button className="w-full cursor-pointer
-               my-3 bg-slate-800 text-white py-4 rounded-full text-lg font-semibold shadow-lg hover:opacity-90 transition">
+               my-3 bg-slate-800 text-white py-2 rounded-full text-lg font-semibold shadow-lg hover:opacity-90 transition">
                   {t("auth.login")}
                 </button>
               </div>
 
               {/* Bottom */}
               <div>
-                <p className="text-center text-gray-500 my-3">{t("auth.orLoginWith")}</p>
+                <p className="text-center text-gray-500 mb-3">{t("auth.orLoginWith")}</p>
 
                 <div className="flex justify-center gap-4">
                   <div className="cursor-pointer p-3 bg-white rounded-xl shadow-sm flex justify-center hover:scale-105 transition">
