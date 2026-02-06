@@ -5,10 +5,14 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import * as THREE from "three";
 import NavBar from "../Components/NavBar";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Aboutt() {
+  const { t, i18n } = useTranslation();
+  const isRtl = i18n.language === "ar";
+
   return (
     <div
       className="app-main relative min-h-screen bg-linear-to-b
@@ -39,80 +43,75 @@ export default function Aboutt() {
       >
         <NavBar />
         {/* Header */}
-        <section className="text-left space-y-6 md:space-y-7">
+        <section className="ltr:text-left rtl:text-right space-y-6 md:space-y-7">
           <h1
             className="about-font md:text-8xl text-7xl
            font-extrabold text-transparent
             bg-clip-text bg-linear-to-r
              from-indigo-400 to-cyan-400 tracking-wide"
           >
-            What is <span className="text-indigo-300">Ma’at?</span>
+            {t("about.whatIsMaat").split('Ma’at?')[0]}
+            <span className="text-indigo-300">
+              {t("about.whatIsMaat").includes('Ma’at?') ? ' Ma’at?' : t("about.whatIsMaat").split('؟')[0].includes('مـاعت') ? ' مـاعت؟' : ''}
+            </span>
           </h1>
         </section>
         {/* About Ma’at Team */}
-        <section className="space-y-6 md:space-y-8">
+        <section className="space-y-6 md:space-y-8 ltr:text-left rtl:text-right">
           <p
             className="italic text-gray-300 
-           text-lg md:text-xl max-w-2xl leading-relaxed"
+           text-lg md:text-xl max-w-2xl leading-relaxed ltr:mr-auto rtl:ml-auto"
           >
-            We are the
+            {t("about.weAreThe")}{" "}
             <span className=" italic text-indigo-400 font-semibold">
-              Ma’at team
+              {t("about.maatTeam")}
             </span>
-            , making train travel smoother and more organized. Our name comes
-            from <span className="italic text-indigo-500">Maat</span>, the
-            ancient Egyptian concept of balance, order, and harmony.
+            , {t("about.teamDescription")}
           </p>
         </section>
         {/* Why We Exist */}
-        <section className="space-y-6 md:space-y-8">
+        <section className="space-y-6 md:space-y-8 ltr:text-left rtl:text-right">
           <h2
             className="about-font text-5xl md:text-6xl
            font-extrabold text-transparent bg-clip-text 
            bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide
            md:leading-normal leading-relaxed"
           >
-            Why we Are<span className="text-indigo-300"> Exist</span>
+            {t("about.whyExist")}
           </h2>
           <p className="text-gray-300 text-lg leading-relaxed">
-            Train travel can be challenging: passengers often crowd near certain
-            doors, creating congestion, delays, and boarding
-            difficulties—especially for the elderly, women, and students.
+            {t("about.existDescription1")}
           </p>
           <p className="text-gray-300 text-lg leading-relaxed">
-            Our mission is to create a smoother and more human-centered
-            experience for every traveler.
+            {t("about.existDescription2")}
           </p>
         </section>
         {/* Our Solution */}
-        <section className="grid md:grid-cols-2 gap-16 items-center">
-          <div className="order-1 space-y-6">
+        <section className="grid md:grid-cols-2 gap-16 items-center ltr:text-left rtl:text-right">
+          <div className="ltr:order-1 rtl:order-1 space-y-6">
             <h2 className="about-font md:text-6xl 
             text-5xl font-extrabold text-transparent 
             
             bg-clip-text bg-linear-to-r from-indigo-400 
             to-cyan-400 tracking-wide">
-              Our <span className="text-indigo-300">Solution</span>
+              {t("about.ourSolution")}
             </h2>
 
             <p className="text-gray-300 text-md md:text-xl leading-relaxed">
-              Ma’at is a
-              <span className="text-indigo-400 font-semibold">
-                smart, human-centered system installed inside trains
-              </span>
-              . Using sensors and real-time monitoring, our system tracks
-              passenger movement and integrates with a mobile app and web
-              platform.
+              {t("about.solutionDescription")}
             </p>
             <ul className="text-gray-300 space-y-2 text-md md:text-lg list-none">
-              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
-                See which carriages and doors are less crowded
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-400">★</span>
+                {t("about.benefit1")}
               </li>
-              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
-                Board efficiently and comfortably
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-400">★</span>
+                {t("about.benefit2")}
               </li>
-              <li className="before:content-['★'] before:text-indigo-400 before:mr-2">
-                Enjoy a calmer, more organized journey
+              <li className="flex items-center gap-2">
+                <span className="text-indigo-400">★</span>
+                {t("about.benefit3")}
               </li>
             </ul>
           </div>
@@ -120,126 +119,89 @@ export default function Aboutt() {
         </section>
         {/* Our Goals */}
         <section className="relative md:block hidden">
-          {" "}
-          <h2 className="about-font text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide">
-            Our <span className="text-indigo-300">Goals</span>
+          <h2 className="about-font text-center text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide mb-12">
+            {t("about.ourGoals")}
           </h2>
           <div className="grid md:grid-cols-5 gap-8 items-center">
             <div
-              className="bg-white/10 bg-blur-lg border border-white/20
-             p-8 rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 col-start-1 w-75"
+              className={`bg-white/10 backdrop-blur-lg border border-white/20
+             p-8 rounded-2xl shadow-lg hover:shadow-indigo-500 transition transform hover:-translate-y-1 w-75 ${isRtl ? 'col-start-5' : 'col-start-1'}`}
             >
               <h3 className="font-bold text-xl mb-2 text-white">
-                Reduce Congestion
+                {t("about.goal1Title")}
               </h3>
               <p className="text-gray-300 text-lg">
-                Minimize crowding at train doors for faster boarding.
+                {t("about.goal1Desc")}
               </p>
             </div>
             <div className="col-start-5 col-span-3"></div>{" "}
             <div
-              className="bg-white/10 bg-blur-lg border border-white/20
+              className={`bg-white/10 backdrop-blur-lg border border-white/20
             p-8 w-75 rounded-2xl
              shadow-lg hover:shadow-indigo-500 transition 
-             transform hover:-translate-y-1 col-start-5"
+             transform hover:-translate-y-1 ${isRtl ? 'col-start-1' : 'col-start-5'}`}
             >
               <h3 className="font-bold text-xl mb-2 text-white">
-                Easier Boarding
+                {t("about.goal2Title")}
               </h3>
               <p className="text-gray-300 text-lg">
-                Make entering trains smooth and comfortable for everyone.
+                {t("about.goal2Desc")}
               </p>
             </div>
             <div
-              className="bg-white/10 bg-blur-lg border border-white/20 p-8  
+              className={`bg-white/10 backdrop-blur-lg border border-white/20 p-8  
             rounded-2xl shadow-lg w-75 hover:shadow-indigo-500 
-            transition transform hover:-translate-y-1 col-start-1"
+            transition transform hover:-translate-y-1 ${isRtl ? 'col-start-5' : 'col-start-1'}`}
             >
               <h3 className="font-bold text-xl mb-2 text-white">
-                Shorter Stops
+                {t("about.goal3Title")}
               </h3>
               <p className="text-gray-300 text-lg">
-                Reduce train dwell times at stations efficiently.
+                {t("about.goal3Desc")}
               </p>
             </div>
             <div className="col-start-5 col-span-1"></div>{" "}
             <div
-              className="bg-white/10 bg-blur-lg border border-white/20
+              className={`bg-white/10 backdrop-blur-lg border border-white/20
              w-75 p-8 rounded-2xl
              shadow-lg hover:shadow-indigo-500 transition 
-             transform hover:-translate-y-1 col-start-5"
+             transform hover:-translate-y-1 ${isRtl ? 'col-start-1' : 'col-start-5'}`}
             >
               <h3 className="font-bold text-xl mb-2 text-white">
-                Calmer Experience
+                {t("about.goal4Title")}
               </h3>
               <p className="text-gray-300 text-lg">
-                Provide a more peaceful and organized journey.
+                {t("about.goal4Desc")}
               </p>
             </div>
           </div>
         </section>
-        {/* Our Goals */}
+        {/* Our Goals Mobile */}
         <section className="md:hidden">
           <h2
             className="about-font text-center 
           text-5xl font-extrabold text-transparent
            bg-clip-text bg-linear-to-r from-indigo-400 to-cyan-400 tracking-wide"
           >
-            Our <span className="text-indigo-300">Goals</span>
+            {t("about.ourGoals")}
           </h2>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
-            <div
-              className="bg-white/10 backdrop-blur-lg border border-white/20
-            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
-            transition transform hover:-translate-y-1 w-full"
-            >
-              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
-                Reduce Congestion
-              </h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Minimize crowding at train doors for faster boarding.
-              </p>
-            </div>
-
-            <div
-              className="bg-white/10 backdrop-blur-lg border border-white/20
-            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
-            transition transform hover:-translate-y-1 w-full"
-            >
-              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
-                Easier Boarding
-              </h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Make entering trains smooth and comfortable for everyone.
-              </p>
-            </div>
-
-            <div
-              className="bg-white/10 backdrop-blur-lg border border-white/20
-            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
-            transition transform hover:-translate-y-1 w-full"
-            >
-              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
-                Shorter Stops
-              </h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Reduce train dwell times at stations efficiently.
-              </p>
-            </div>
-
-            <div
-              className="bg-white/10 backdrop-blur-lg border border-white/20
-            p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
-            transition transform hover:-translate-y-1 w-full"
-            >
-              <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
-                Calmer Experience
-              </h3>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Provide a more peaceful and organized journey.
-              </p>
-            </div>
+            {[1, 2, 3, 4].map((goalNum) => (
+              <div
+                key={goalNum}
+                className="bg-white/10 backdrop-blur-lg border border-white/20
+              p-6 md:p-8 rounded-2xl shadow-lg hover:shadow-indigo-500
+              transition transform hover:-translate-y-1 w-full"
+              >
+                <h3 className="font-bold text-lg md:text-xl mb-2 text-white">
+                  {t(`about.goal${goalNum}Title`)}
+                </h3>
+                <p className="text-gray-300 text-sm sm:text-base">
+                  {t(`about.goal${goalNum}Desc`)}
+                </p>
+              </div>
+            ))}
           </div>
         </section>
         <section className="h-[30vh] md:hidden"></section>
@@ -247,6 +209,7 @@ export default function Aboutt() {
     </div>
   );
 }
+
 
 // ============================
 // 3D Experience

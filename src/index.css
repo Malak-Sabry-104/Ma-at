@@ -2,16 +2,29 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Outline&display=swap');
 
+/* Beautiful Arabic font - Cairo */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+/* Fancy Arabic font for About page - Aref Ruqa */
+@import url('https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&display=swap');
+
 
 
 
 @import "tailwindcss";
 
-.about-font{
-   font-family: "Bungee Outline", sans-serif;
+.about-font {
+  font-family: "Bungee Outline", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
+
+/* Override about-font for Arabic (RTL) - Use fancy Aref Ruqa font */
+html[dir="rtl"] .about-font {
+  font-family: "Aref Ruqaa", serif !important;
+  font-weight: 700;
+}
+
 /*any import should come before tailwind import*/
 
 body {
@@ -20,6 +33,13 @@ body {
   font-style: normal;
   font-variation-settings: "wdth" 100;
 }
+
+/* Apply Cairo font for Arabic (RTL) */
+html[dir="rtl"] body {
+  font-family: "Cairo", sans-serif !important;
+}
+
+
 
 #hero {
   background-image: url("./assets/hero_bg.jpg");
@@ -41,8 +61,9 @@ body {
 .fade-away-now {
   opacity: 0;
 }
-.login-bg{
+
+.login-bg {
   background-image: url("../src/assets/welcome-bg.png");
   background-repeat: no-repeat;
-background-size: cover;
+  background-size: cover;
 }

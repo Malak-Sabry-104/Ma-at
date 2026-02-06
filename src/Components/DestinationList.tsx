@@ -3,45 +3,63 @@ import { Target, Heart, Train } from "lucide-react";
 import alex from "../assets/alex.jpg";
 import aswan from "../assets/aswan.jpg";
 import giza from "../assets/giza.jpg";
-import cairo from "../assets/cairo.jpg";
+import cairoImg from "../assets/cairo.jpg";
 import visa from "../assets/visa-logo.png";
 import masterCard from "../assets/Mastercard-logo.svg";
 import { FaArrowRight, FaGlobe } from "react-icons/fa";
-
-const destinationsData = [
-  {
-    name: "Alexandria to Damanhour",
-    image: alex,
-    price: 115,
-    target: "Economy",
-  },
-  { name: "Aswan to Luxor", image: aswan, price: 180, target: "Luxury" },
-  { name: "Giza to Cairo", image: giza, price: 90, target: "Business" },
-  { name: "Cairo to Alexandria", image: cairo, price: 120, target: "Luxury" },
-];
-const egyptTrainRoutes = [
-  "Cairo to Alexandria",
-  "Cairo to Tanta",
-  "Cairo to Mansoura",
-  "Cairo to Zagazig",
-  "Cairo to Benha",
-  "Cairo to Damanhour",
-  "Cairo to Ismailia",
-  "Cairo to Port Said",
-  "Cairo to Suez",
-  "Cairo to Minya",
-  "Cairo to Asyut",
-  "Cairo to Sohag",
-  "Cairo to Qena",
-  "Cairo to Luxor",
-  "Cairo to Aswan",
-  "Alexandria to Tanta",
-  "Tanta to Mansoura",
-  "Benha to Zagazig",
-];
+import { useTranslation } from "react-i18next";
 
 const DestinationList = () => {
+  const { t } = useTranslation();
   const [favorites, setFavorites] = useState<Record<number, boolean>>({});
+
+  const destinationsData = [
+    {
+      name: `${t("footer.routes.alex")} ${t("footer.routes.to")} ${t("footer.routes.damanhour")}`,
+      image: alex,
+      price: 115,
+      target: t("hero.Economy"),
+    },
+    {
+      name: `${t("footer.routes.aswan")} ${t("footer.routes.to")} ${t("footer.routes.luxor")}`,
+      image: aswan,
+      price: 180,
+      target: t("hero.Luxury")
+    },
+    {
+      name: `${t("footer.routes.cairo")} ${t("footer.routes.to")} ${t("footer.routes.cairo")}`, // Wait, Giza to Cairo? 
+      image: giza,
+      price: 90,
+      target: t("hero.Business")
+    },
+    {
+      name: `${t("footer.routes.cairo")} ${t("footer.routes.to")} ${t("footer.routes.alex")}`,
+      image: cairoImg,
+      price: 120,
+      target: t("hero.Luxury")
+    },
+  ];
+
+  const egyptTrainRoutes = [
+    { from: "cairo", to: "alex" },
+    { from: "cairo", to: "tanta" },
+    { from: "cairo", to: "mansoura" },
+    { from: "cairo", to: "zagazig" },
+    { from: "cairo", to: "benha" },
+    { from: "cairo", to: "damanhour" },
+    { from: "cairo", to: "ismailia" },
+    { from: "cairo", to: "portSaid" },
+    { from: "cairo", to: "suez" },
+    { from: "cairo", to: "minya" },
+    { from: "cairo", to: "asyut" },
+    { from: "cairo", to: "sohag" },
+    { from: "cairo", to: "qena" },
+    { from: "cairo", to: "luxor" },
+    { from: "cairo", to: "aswan" },
+    { from: "alex", to: "tanta" },
+    { from: "tanta", to: "mansoura" },
+    { from: "benha", to: "zagazig" },
+  ];
 
   const toggleFavorite = (index: number) => {
     setFavorites((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -50,9 +68,9 @@ const DestinationList = () => {
   return (
     <>
       {/* section 2 */}
-      <section className="px-6 py-10">
+      <section className="px-6 py-10 ltr:text-left rtl:text-right">
         <h1 className="text-3xl font-semibold mb-6">
-          Popular rail routes across Egypt
+          {t("footer.popularRoutes")}
         </h1>
 
         <div className="flex flex-wrap gap-6 justify-center">
@@ -72,15 +90,14 @@ const DestinationList = () => {
                 {/* Favorite button */}
                 <button
                   onClick={() => toggleFavorite(index)}
-                  className="absolute top-3 right-3 bg-white/90 rounded-full p-1 shadow"
+                  className="absolute top-3 ltr:right-3 rtl:left-3 bg-white/90 rounded-full p-1 shadow cursor-pointer active:scale-90 transition"
                   aria-label="Add to favorites"
                 >
                   <Heart
-                    className={`w-5 h-5 transition-colors ${
-                      favorites[index]
+                    className={`w-5 h-5 transition-colors ${favorites[index]
                         ? "fill-red-500 text-red-500"
                         : "text-gray-700"
-                    }`}
+                      }`}
                   />
                 </button>
               </div>
@@ -96,25 +113,25 @@ const DestinationList = () => {
 
                 <span className="flex items-center gap-2 text-gray-500 text-sm">
                   <Train className="w-4 h-4" />
-                  Egyptian Railways
+                  {t("footer.egyptianRailways")}
                 </span>
 
-                <span className="text-xs text-gray-500 mt-1">Start from</span>
+                <span className="text-xs text-gray-500 mt-1">{t("footer.startFrom")}</span>
 
-                <p className="text-2xl">{dest.price} E£</p>
+                <p className="text-2xl">{dest.price} {t("footer.currency")}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
+
       {/* section 3 */}
-      <section className="px-6">
+      <section className="px-6 ltr:text-left rtl:text-right">
         <h1 className="font-semibold mb-3 text-3xl ">
-          Most Trending Rail routes in Egypt{" "}
+          {t("footer.trendingRoutes")}
         </h1>
         <p className="text-gray-500">
-          The most exceptional travel experiences that captivated travelers'
-          hearts.
+          {t("footer.trendingDescription")}
         </p>
         <div className="flex flex-wrap gap-3 mt-4">
           {egyptTrainRoutes.map((route, index) => (
@@ -131,40 +148,40 @@ const DestinationList = () => {
             font-medium
             text-gray-700
             transition
+            cursor-pointer
             hover:border-gray-700
             hover:shadow-sm
+            active:scale-95
           "
             >
-              {route}
+              {t(`footer.routes.${route.from}`)} {t("footer.routes.to")} {t(`footer.routes.${route.to}`)}
             </button>
           ))}
         </div>
       </section>
+
       {/* section 4 */}
-      <section className="px-6 mt-6 mb-5">
+      <section className="px-6 mt-6 mb-5 ltr:text-left rtl:text-right">
         <h1 className="text-3xl font-semibold mb-6">
-          Get promo for a cheaper price
+          {t("footer.promoTitle")}
         </h1>
         {/* Cards */}
-        <div className="md:flex-row flex-col flex gap-4 overflow-x-auto py-5 px-4">
+        <div className="flex flex-col md:flex-row gap-4 overflow-x-auto py-5 px-4">
           {/* Mastercard Offer */}
           <div
             className="min-w-[30%] flex 
           rounded-2xl bg-white p-2 shadow-customized border border-gray-200"
           >
-            <div className="w-24 flex flex-col items-center justify-center bg-[#F6EFE6] rounded-l-2xl">
+            <div className="w-24 flex flex-col items-center justify-center bg-[#F6EFE6] ltr:rounded-l-2xl rtl:rounded-r-2xl">
               <img src={masterCard} alt="Mastercard" className="mb-2" />
-              <span className="text-sm font-semibold text-gray-900">
-                25% OFF
+              <span className="text-sm font-semibold text-gray-900 uppercase">
+                25% {t("footer.off")}
               </span>
             </div>
 
             <div className="flex-1 flex items-center px-4">
               <p className="text-sm font-medium text-gray-800">
-                25% discount <br />
-                <span className="text-gray-500 font-normal">
-                  with mastercard
-                </span>
+                {t("footer.discountMastercard")}
               </p>
             </div>
           </div>
@@ -174,17 +191,16 @@ const DestinationList = () => {
             className="min-w-[30%] flex 
           rounded-2xl bg-white p-2 shadow-customized  border border-gray-200"
           >
-            <div className="w-24 flex flex-col items-center justify-center bg-[#EEF0FF] rounded-l-2xl">
+            <div className="w-24 flex flex-col items-center justify-center bg-[#EEF0FF] ltr:rounded-l-2xl rtl:rounded-r-2xl">
               <img src={visa} alt="Visa" className="mb-2" />
-              <span className="text-sm font-semibold text-gray-900">
-                33% OFF
+              <span className="text-sm font-semibold text-gray-900 uppercase">
+                33% {t("footer.off")}
               </span>
             </div>
 
             <div className="flex-1 flex items-center px-4">
               <p className="text-sm font-medium text-gray-800">
-                33% discount <br />
-                <span className="text-gray-500 font-normal">with visa</span>
+                {t("footer.discountVisa")}
               </p>
             </div>
           </div>
@@ -192,7 +208,7 @@ const DestinationList = () => {
       </section>
 
       {/* section 5 */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 min-h-[80vh]">
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4 min-h-[80vh] ltr:text-left rtl:text-right">
         {/* Left side */}
         <div className="flex flex-col gap-4 lg:col-span-1 h-full">
           {/* Top left card */}
@@ -204,18 +220,18 @@ const DestinationList = () => {
               <div>
                 <FaGlobe className="text-white/50 mb-8 w-[50px] h-[50px] bg-white/20 p-3 rounded-lg" />
                 <h2 className="text-white text-2xl md:text-4xl mb-2">
-                  Travel Beyond Limits
+                  {t("footer.travelBeyond")}
                 </h2>
                 <p className="text-white/80 text-md">
-                  Discover Egypt’s hidden gems with comfort and style.
+                  {t("footer.travelBeyondDesc")}
                 </p>
               </div>
               <button className="w-fit flex items-center
                gap-3 md:py-3 cursor-pointer bg-white
-               p-2
-                text-black md:px-5 rounded-lg 
+               px-4 py-2
+                text-black rounded-lg 
                 text-sm font-medium hover:bg-gray-200 transition">
-                Start Your Journey <FaArrowRight />
+                {t("footer.startJourney")} <FaArrowRight className="rtl:rotate-180" />
               </button>
             </div>
           </div>
@@ -227,11 +243,11 @@ const DestinationList = () => {
           >
             <div className="absolute inset-0 bg-black/50 p-6 flex flex-col justify-end">
               <p className="text-white/80 text-3xl mb-3">
-                Routes Ready to Explore
+                {t("footer.routesToExplore")}
               </p>
               <h3 className="text-white text-4xl font-bold">1,895+</h3>
               <p className="text-white/80 text-md mt-1">
-                Train routes connecting major Egyptian cities
+                {t("footer.routesToExploreDesc")}
               </p>
             </div>
           </div>
@@ -247,11 +263,10 @@ const DestinationList = () => {
             <div>
               <h1 className="text-white text-2xl
                md:text-3xl lg:text-5xl font-semibold leading-snug max-w-3xl">
-                Journey. Explore. Remember.
+                {t("footer.journeyExploreRemember")}
               </h1>
               <p className="text-white/80 md:text-lg mt-4 max-w-2xl mx-auto">
-                Experience unforgettable trips across Egypt with our curated
-                train routes and cozy stays.
+                {t("footer.journeyDesc")}
               </p>
             </div>
           </div>
@@ -262,3 +277,4 @@ const DestinationList = () => {
 };
 
 export default DestinationList;
+

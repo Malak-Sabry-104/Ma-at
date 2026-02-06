@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from "react-icons/fa";
 import Layout from "../Components/Layout";
+import { useTranslation } from "react-i18next";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -11,11 +13,11 @@ const Contact = () => {
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
     setFormData({ name: "", email: "", message: "" });
@@ -29,20 +31,19 @@ const Contact = () => {
           {/* Title */}
           <h1 className="text-center text-4xl md:text-5xl font-bold tracking-wide mb-14
             text-transparent bg-clip-text bg-gradient-to-r from-blue-800 to-cyan-400">
-            Contact Us
+            {t("contact.title")}
           </h1>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start ltr:text-left rtl:text-right">
             {/* Contact Info */}
             <div className="space-y-8">
               <h2 className="text-2xl font-semibold text-transparent bg-clip-text
                 bg-gradient-to-r from-blue-800 to-cyan-300">
-                Get in Touch
+                {t("contact.getInTouch")}
               </h2>
 
               <p className="text-white/60 leading-relaxed max-w-md">
-                We'd love to hear from you. Whether you have a question,
-                feedback, or a business inquiry, our team is ready to help.
+                {t("contact.contactDescription")}
               </p>
 
               <div className="space-y-5">
@@ -50,14 +51,14 @@ const Contact = () => {
                   <span className="p-2 rounded-lg bg-gradient-to-r from-blue-800 to-cyan-500">
                     <FaPhoneAlt className="text-white w-4 h-4" />
                   </span>
-                  <span className="text-white/80">+1 (234) 567-890</span>
+                  <span className="text-white/80 ltr:dir-ltr rtl:dir-ltr">{t("contact.phone")}</span>
                 </div>
 
                 <div className="flex items-center gap-4">
                   <span className="p-2 rounded-lg bg-gradient-to-r from-blue-800 to-cyan-500">
                     <FaEnvelope className="text-white w-4 h-4" />
                   </span>
-                  <span className="text-white/80">contact@Ma'at.com</span>
+                  <span className="text-white/80">{t("contact.emailLabel")}</span>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -65,7 +66,7 @@ const Contact = () => {
                     <FaMapMarkerAlt className="text-white w-4 h-4" />
                   </span>
                   <span className="text-white/80">
-                    123 Main Street, City, Country
+                    {t("contact.addressLabel")}
                   </span>
                 </div>
               </div>
@@ -78,7 +79,7 @@ const Contact = () => {
                 <input
                   type="text"
                   name="name"
-                  placeholder="Your Name"
+                  placeholder={t("contact.namePlaceholder")}
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full rounded-lg bg-black/40 px-4 py-3
@@ -92,7 +93,7 @@ const Contact = () => {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Your Email"
+                  placeholder={t("contact.emailPlaceholder")}
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full rounded-lg bg-black/40 px-4 py-3
@@ -105,7 +106,7 @@ const Contact = () => {
 
                 <textarea
                   name="message"
-                  placeholder="Your Message"
+                  placeholder={t("contact.messagePlaceholder")}
                   value={formData.message}
                   onChange={handleChange}
                   rows={5}
@@ -124,13 +125,13 @@ const Contact = () => {
                     hover:from-blue-800 hover:to-cyan-400
                     active:scale-[0.98] transition-transform shadow-lg"
                 >
-                  Send Message
+                  {t("contact.send")}
                 </button>
               </form>
 
               {submitted && (
                 <p className="mt-5 text-center text-green-400 font-medium">
-                  Thank you for contacting us!
+                  {t("contact.thankYou")}
                 </p>
               )}
             </div>
@@ -142,3 +143,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

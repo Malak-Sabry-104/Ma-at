@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IoMdPerson } from "react-icons/io";
 import { FaArrowRight, FaExchangeAlt, FaPlus, FaTrash } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 type TripType = "oneway" | "round" | "multicity";
 
@@ -11,6 +12,7 @@ interface Leg {
 }
 
 const Hero = () => {
+  const { t } = useTranslation();
   const [tripType, setTripType] = useState<TripType>("oneway");
 
   const [from, setFrom] = useState("");
@@ -35,11 +37,10 @@ const Hero = () => {
 
   const buttonStyle = (type: TripType) =>
     `md:px-4 md:py-2 rounded-lg p-2 
-  my-3 text-sm cursor-pointer font-medium transition-all ${
-    tripType === type
+  my-3 text-sm cursor-pointer font-medium transition-all ${tripType === type
       ? "bg-black text-white"
       : "bg-white text-gray-700 hover:bg-gray-100"
-  }`;
+    }`;
 
   // Multi-city handlers
   const updateLeg = (index: number, field: keyof Leg, value: string) => {
@@ -64,11 +65,11 @@ const Hero = () => {
     <section id="hero" className="min-h-screen overflow-hidden">
       <div className="bg-black/30 min-h-screen py-12">
         <h1
-          className="md:pt-90 pt-25 ms-4 text-white md-w[100%] 
-        leading-relaxed md:leading-normal
+          className="md:pt-90 pt-25 mx-4 text-white md-w[100%] 
+        leading-relaxed md:leading-normal ltr:text-left rtl:text-right
          w-[90%] text-4xl md:text-5xl mb-8"
         >
-          Navigate the world by rail
+          {t("hero.title")}
         </h1>
 
         <div
@@ -84,26 +85,26 @@ const Hero = () => {
               className="md:text-2xl md:pt-0 pt-2
              text-white italic font-semibold"
             >
-              Find Your Train Journey
+              {t("hero.subtitle")}
             </h2>
             <div className="flex gap-3  ">
               <button
                 onClick={() => setTripType("oneway")}
                 className={buttonStyle("oneway")}
               >
-                One Way
+                {t("hero.oneWay")}
               </button>
               <button
                 onClick={() => setTripType("round")}
                 className={buttonStyle("round")}
               >
-                Round
+                {t("hero.round")}
               </button>
               <button
                 onClick={() => setTripType("multicity")}
                 className={buttonStyle("multicity")}
               >
-                Multi-City
+                {t("hero.multiCity")}
               </button>
             </div>
           </div>
@@ -124,14 +125,14 @@ const Hero = () => {
                  w-[100%] flex flex-col"
                 >
                   <label htmlFor="from" className="mb-2">
-                    From
+                    {t("hero.from")}
                   </label>
                   <input
                     id="from"
                     name="from"
                     className="input ring-3 ring-black/10 p-2
                      rounded-lg focus:outline-0"
-                    placeholder="Origin station"
+                    placeholder={t("hero.from")}
                     value={from}
                     onChange={(e) => setFrom(e.target.value)}
                   />
@@ -155,14 +156,14 @@ const Hero = () => {
                  w-[100%] flex flex-col"
                 >
                   <label htmlFor="to" className="mb-2">
-                    To
+                    {t("hero.to")}
                   </label>
                   <input
                     id="to"
                     name="to"
                     className="input ring-3 ring-black/10
                      p-2 rounded-lg focus:outline-0"
-                    placeholder="Destination station"
+                    placeholder={t("hero.to")}
                     value={to}
                     onChange={(e) => setTo(e.target.value)}
                   />
@@ -173,7 +174,7 @@ const Hero = () => {
               md:w-[300px]  w-[100%] flex flex-col"
                 >
                   <label htmlFor="departure" className="mb-2">
-                    Departure
+                    {t("hero.departure")}
                   </label>
                   <input
                     className="input ring-3  w-[100%]
@@ -187,7 +188,7 @@ const Hero = () => {
                 {tripType === "round" && (
                   <div className="input-wrapper  flex flex-col">
                     <label htmlFor="return" className="mb-2">
-                      Return
+                      {t("hero.return")}
                     </label>
                     <input
                       id="return"
@@ -204,7 +205,7 @@ const Hero = () => {
                 {/* Passengers inline */}
                 <div className="relative flex flex-col">
                   <label htmlFor="passengers" className="mb-2">
-                    Passengers
+                    {t("hero.passengers")}
                   </label>
                   <button
                     id="passengers"
@@ -213,17 +214,17 @@ const Hero = () => {
                      ring-black/10 flex items-center gap-2 p-2 cursor-pointer"
                   >
                     <IoMdPerson />
-                    {adults} adult{adults > 1 && "s"}
-                    {infants > 0 && `, ${infants} infant`}
+                    {adults} {adults > 1 ? t("hero.adults_plural") : t("hero.adult")}
+                    {infants > 0 && `, ${infants} ${t("hero.infant")}`}
                   </button>
 
                   {showPassengers && (
                     <div
-                      className="absolute right-0   top-16 
+                      className="absolute ltr:right-0 rtl:left-0 top-16 
                      bg-white rounded-xl shadow-lg w-45 p-4 z-20"
                     >
                       <div className="flex  justify-between items-center mb-3">
-                        <span>Adults</span>
+                        <span>{t("hero.adults")}</span>
                         <div className="flex gap-2 items-center">
                           <button
                             onClick={() => setAdults(Math.max(1, adults - 1))}
@@ -242,7 +243,7 @@ const Hero = () => {
                       </div>
 
                       <div className="flex justify-between items-center">
-                        <span>Infants</span>
+                        <span>{t("hero.infants")}</span>
                         <div className="flex gap-2 items-center">
                           <button
                             onClick={() => setInfants(Math.max(0, infants - 1))}
@@ -269,7 +270,7 @@ const Hero = () => {
             {tripType === "multicity" && (
               <div
                 className="
-      flex w-full lg:w-1/2
+      flex w-full lg:w-3/4
       mx-auto flex-col
       p-4 gap-6
     "
@@ -287,10 +288,10 @@ const Hero = () => {
                     >
                       {/* From */}
                       <div className="input-wrapper flex flex-col w-full lg:w-1/4">
-                        <label>From</label>
+                        <label>{t("hero.from")}</label>
                         <input
                           className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
-                          placeholder="Origin station"
+                          placeholder={t("hero.from")}
                           value={leg.from}
                           onChange={(e) =>
                             updateLeg(index, "from", e.target.value)
@@ -300,10 +301,10 @@ const Hero = () => {
 
                       {/* To */}
                       <div className="input-wrapper flex flex-col w-full lg:w-1/4">
-                        <label>To</label>
+                        <label>{t("hero.to")}</label>
                         <input
                           className="input ring-3 ring-black/10 p-2 rounded-lg focus:outline-0"
-                          placeholder="Destination station"
+                          placeholder={t("hero.to")}
                           value={leg.to}
                           onChange={(e) =>
                             updateLeg(index, "to", e.target.value)
@@ -313,7 +314,7 @@ const Hero = () => {
 
                       {/* Date */}
                       <div className="input-wrapper flex flex-col w-full lg:w-1/4">
-                        <label>Departure</label>
+                        <label>{t("hero.departure")}</label>
                         <div className="flex justify-between gap-3 items-center ">
                           <input
                             type="date"
@@ -345,7 +346,7 @@ const Hero = () => {
                   className="
         flex flex-col md:flex-row
         gap-4 items-center
-        justify-center ms-4 
+        justify-center ltr:ms-4 rtl:me-4 
       "
                 >
                   {/* Add Leg */}
@@ -353,15 +354,15 @@ const Hero = () => {
                     onClick={addLeg}
                     className="
           flex items-center gap-2 md:mt-5  p-2
-          text-blue-500 hover:text-blue-700
+          text-indigo-600 hover:text-indigo-800 font-medium
         "
                   >
-                    <FaPlus /> Add another flight
+                    <FaPlus /> {t("hero.addLeg")}
                   </button>
 
                   {/* Passengers */}
                   <div className="relative flex flex-col w-full md:w-56">
-                    <label className="mb-2">Passengers</label>
+                    <label className="mb-2">{t("hero.passengers")}</label>
                     <button
                       onClick={() => setShowPassengers(!showPassengers)}
                       className="
@@ -371,21 +372,21 @@ const Hero = () => {
           "
                     >
                       <IoMdPerson />
-                      {adults} adult{adults > 1 && "s"}
-                      {infants > 0 && `, ${infants} infant`}
+                      {adults} {adults > 1 ? t("hero.adults_plural") : t("hero.adult")}
+                      {infants > 0 && `, ${infants} ${t("hero.infant")}`}
                     </button>
 
                     {showPassengers && (
                       <div
                         className="
-              absolute right-0 top-full mt-2
+              absolute ltr:right-0 rtl:left-0 top-full mt-2
               bg-white rounded-xl shadow-lg
               w-full md:w-64 p-4 z-20
             "
                       >
                         {/* Adults */}
                         <div className="flex justify-between items-center mb-3">
-                          <span>Adults</span>
+                          <span>{t("hero.adults")}</span>
                           <div className="flex gap-2 items-center">
                             <button
                               onClick={() => setAdults(Math.max(1, adults - 1))}
@@ -405,7 +406,7 @@ const Hero = () => {
 
                         {/* Infants */}
                         <div className="flex justify-between items-center">
-                          <span>Infants</span>
+                          <span>{t("hero.infants")}</span>
                           <div className="flex gap-2 items-center">
                             <button
                               onClick={() =>
@@ -432,11 +433,11 @@ const Hero = () => {
             )}
 
             <div className="flex flex-col gap-2 mt-4  p-2">
-              <label className="ms-3 font-medium text-gray-700">
-                Ticket Class
+              <label className="ltr:ms-3 rtl:me-3 font-medium text-gray-700">
+                {t("hero.ticketClass")}
               </label>
 
-              <div className="flex gap-3 flex-wrap justify-between mx-3">
+              <div className="flex gap-3 flex-wrap justify-between ltr:mx-3 rtl:mx-3">
                 <div
                   className="gap-3 flex  flex-wrap justify-center 
                 items-center px-2"
@@ -447,22 +448,21 @@ const Hero = () => {
                       onClick={() => setSelectedClass(cls)}
                       className={`px-4 py-2 
                          rounded-lg text-sm font-medium transition-all
-          ${
-            selectedClass === cls
-              ? "bg-black text-white"
-              : "bg-white text-gray-700 ring-1 ring-black/10 hover:bg-gray-100"
-          }`}
+          ${selectedClass === cls
+                          ? "bg-black text-white"
+                          : "bg-white text-gray-700 ring-1 ring-black/10 hover:bg-gray-100"
+                        }`}
                     >
-                      {cls}
+                      {t(`hero.${cls}`)}
                     </button>
                   ))}
                 </div>
                 <button
                   className="flex  items-center gap-2 
                   justify-center cursor-pointer bg-black rounded-lg
-     text-white  p-3 md:w-37.5  w-full"
+     text-white  p-3 md:w-40  w-full"
                 >
-                  Search <FaArrowRight />
+                  {t("hero.search")} <FaArrowRight className="rtl:rotate-180" />
                 </button>
               </div>
             </div>
@@ -474,3 +474,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
