@@ -38,7 +38,13 @@
         "Luxury": "فاخرة",
         "Executive": "تنفيذية",
         "Business": "رجال أعمال",
-        "Economy": "اقتصادية"
+        "Economy": "اقتصادية",
+        "All": "كل الدرجات",
+        "VIP": "VIP",
+        "Spanish": "اسباني",
+        "Russian": "روسي",
+        "Sleeping": "نائم",
+        "Talgo": "تالجو"
     },
     "about": {
         "whatIsMaat": "ما هو مشروع مـاعت؟",

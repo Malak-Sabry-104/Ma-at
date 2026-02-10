@@ -1,53 +1,103 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaTrain, FaClock, FaUsers, FaArrowLeft, FaMapMarkerAlt, FaCalendarAlt, FaIdCard, FaCheckCircle, FaExclamationCircle } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../Components/Layout";
 import * as bookingApi from "../api/booking.api";
+import * as trainApi from "../api/train.api";
 
-interface Train {
+interface TrainResult {
     id: number;
     train_number: string;
     departure_time: string;
     arrival_time: string;
     duration: string;
-    available_seats: number;
-    fare: number;
-    class: string;
+    duration_minutes: number;
+    fare_per_passenger: number;
+    total_fare: number;
+    class: { name_ar: string; name_en: string };
+}
+
+interface StationInfo {
+    id: number;
+    name?: string;
+    name_ar?: string;
+    name_en?: string;
 }
 
 interface SearchResultsData {
-    from: { name: string; code: string; zone: number };
-    to: { name: string; code: string; zone: number };
+    from: StationInfo;
+    to: StationInfo;
     date: string;
     passengers: number;
     ticketClass: string;
-    trains: Train[];
+    trains: TrainResult[];
 }
 
 const SearchResults = () => {
-    const location = useLocation();
+    const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { t } = useTranslation();
-    const { results, searchParams } = location.state as { results: SearchResultsData; searchParams: any } || {};
+    const { t, i18n } = useTranslation();
+    const isAr = i18n.language === "ar";
 
+    const [results, setResults] = useState<SearchResultsData | null>(null);
+    const [loading, setLoading] = useState(true);
     const [bookingStatus, setBookingStatus] = useState<{ type: 'success' | 'error' | null; message: string }>({ type: null, message: '' });
     const [bookingInProgress, setBookingInProgress] = useState<number | null>(null);
 
-    const handleBooking = async (train: Train) => {
+    // Read search params from URL
+    const from = searchParams.get("from") || "";
+    const to = searchParams.get("to") || "";
+    const date = searchParams.get("date") || "";
+    const passengers = parseInt(searchParams.get("passengers") || "1");
+    const ticketClass = searchParams.get("class") || "";
+
+    useEffect(() => {
+        if (!from || !to || !date) {
+            setLoading(false);
+            return;
+        }
+
+        const fetchResults = async () => {
+            setLoading(true);
+            try {
+                const response = await trainApi.searchTrains({
+                    from,
+                    to,
+                    date,
+                    passengers,
+                    ticketClass: ticketClass || undefined,
+                });
+                setResults(response.data.results);
+            } catch (error) {
+                console.error("Search error:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchResults();
+    }, [from, to, date, passengers, ticketClass]);
+
+    const getStationDisplayName = (station: StationInfo) => {
+        if (isAr) return station.name_ar || station.name || station.name_en || "";
+        return station.name_en || station.name || station.name_ar || "";
+    };
+
+    const handleBooking = async (train: TrainResult) => {
         try {
             setBookingInProgress(train.id);
             setBookingStatus({ type: null, message: '' });
 
             const response = await bookingApi.createBooking(
                 train.id,
-                results.passengers,
+                passengers,
                 {
-                    from: results.from.name,
-                    to: results.to.name,
-                    date: results.date,
-                    ticketClass: results.ticketClass
+                    from: results?.from?.name_ar || from,
+                    to: results?.to?.name_ar || to,
+                    date,
+                    ticketClass,
                 }
             );
 
@@ -56,27 +106,34 @@ const SearchResults = () => {
                 message: `Booking confirmed! Booking ID: ${response.data.booking.id}`
             });
 
-            // Auto-hide success message after 5 seconds
-            setTimeout(() => {
-                setBookingStatus({ type: null, message: '' });
-            }, 5000);
-
+            setTimeout(() => setBookingStatus({ type: null, message: '' }), 5000);
         } catch (error: any) {
             setBookingStatus({
                 type: 'error',
                 message: error.response?.data?.error || 'Failed to create booking'
             });
-
-            // Auto-hide error message after 5 seconds
-            setTimeout(() => {
-                setBookingStatus({ type: null, message: '' });
-            }, 5000);
+            setTimeout(() => setBookingStatus({ type: null, message: '' }), 5000);
         } finally {
             setBookingInProgress(null);
         }
     };
 
-    if (!results) {
+    // Loading state
+    if (loading) {
+        return (
+            <Layout>
+                <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                    <div className="text-center">
+                        <div className="w-16 h-16 border-4 border-gray-200 border-t-black rounded-full animate-spin mx-auto mb-6"></div>
+                        <p className="text-gray-500 font-bold text-sm uppercase tracking-widest">Searching trains...</p>
+                    </div>
+                </div>
+            </Layout>
+        );
+    }
+
+    // No params or no results
+    if (!from || !to || !results) {
         return (
             <Layout>
                 <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -102,9 +159,7 @@ const SearchResults = () => {
         hidden: { opacity: 0 },
         show: {
             opacity: 1,
-            transition: {
-                staggerChildren: 0.1
-            }
+            transition: { staggerChildren: 0.1 }
         }
     };
 
@@ -139,8 +194,8 @@ const SearchResults = () => {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: -20, scale: 0.95 }}
                                     className={`mb-6 p-4 rounded-2xl border-2 flex items-center gap-3 ${bookingStatus.type === 'success'
-                                            ? 'bg-emerald-50 border-emerald-500 text-emerald-900'
-                                            : 'bg-red-50 border-red-500 text-red-900'
+                                        ? 'bg-emerald-50 border-emerald-500 text-emerald-900'
+                                        : 'bg-red-50 border-red-500 text-red-900'
                                         }`}
                                 >
                                     {bookingStatus.type === 'success' ? (
@@ -166,22 +221,22 @@ const SearchResults = () => {
                                         <p className="flex items-center gap-2 text-[10px] text-gray-400 uppercase tracking-widest font-black">
                                             <FaMapMarkerAlt className="text-blue-500" /> From
                                         </p>
-                                        <p className="text-xl font-black text-black">{results.from.name}</p>
-                                        <p className="text-xs text-blue-600 font-bold bg-blue-50 inline-block px-2 py-0.5 rounded uppercase">{results.from.code}</p>
+                                        <p className="text-xl font-black text-black">{getStationDisplayName(results.from)}</p>
                                     </div>
                                     <div className="space-y-1">
                                         <p className="flex items-center gap-2 text-[10px] text-gray-400 uppercase tracking-widest font-black">
                                             <FaMapMarkerAlt className="text-emerald-500" /> To
                                         </p>
-                                        <p className="text-xl font-black text-black">{results.to.name}</p>
-                                        <p className="text-xs text-emerald-600 font-bold bg-emerald-50 inline-block px-2 py-0.5 rounded uppercase">{results.to.code}</p>
+                                        <p className="text-xl font-black text-black">{getStationDisplayName(results.to)}</p>
                                     </div>
                                     <div className="space-y-1">
                                         <p className="flex items-center gap-2 text-[10px] text-gray-400 uppercase tracking-widest font-black">
                                             <FaCalendarAlt className="text-orange-500" /> Date
                                         </p>
                                         <p className="text-xl font-black text-black">{results.date}</p>
-                                        <p className="text-xs text-gray-400 font-bold">{results.ticketClass} Class</p>
+                                        {results.ticketClass && results.ticketClass !== "all" && (
+                                            <p className="text-xs text-gray-400 font-bold">{results.ticketClass} Class</p>
+                                        )}
                                     </div>
                                     <div className="space-y-1">
                                         <p className="flex items-center gap-2 text-[10px] text-gray-400 uppercase tracking-widest font-black">
@@ -218,12 +273,14 @@ const SearchResults = () => {
                                             </div>
                                             <div>
                                                 <p className="text-2xl font-black text-black leading-none">{train.train_number}</p>
-                                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black mt-1">Express Line</p>
+                                                <p className="text-[10px] text-gray-400 uppercase tracking-widest font-black mt-1">
+                                                    {isAr ? train.class?.name_ar : train.class?.name_en || "Train"}
+                                                </p>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-2 text-blue-600 font-black text-xs bg-blue-50 px-3 py-1.5 rounded-xl w-fit">
                                             <FaIdCard className="text-sm" />
-                                            {train.class}
+                                            {isAr ? train.class?.name_ar : train.class?.name_en || "—"}
                                         </div>
                                     </div>
 
@@ -232,7 +289,7 @@ const SearchResults = () => {
                                         <div className="flex items-center justify-between relative">
                                             <div className="text-center md:text-left">
                                                 <p className="text-4xl font-black text-black tracking-tighter">{train.departure_time}</p>
-                                                <p className="text-sm font-bold text-gray-400 mt-1">{results.from.name}</p>
+                                                <p className="text-sm font-bold text-gray-400 mt-1">{getStationDisplayName(results.from)}</p>
                                             </div>
 
                                             <div className="flex-1 mx-8 relative">
@@ -256,21 +313,22 @@ const SearchResults = () => {
 
                                             <div className="text-center md:text-right">
                                                 <p className="text-4xl font-black text-black tracking-tighter">{train.arrival_time}</p>
-                                                <p className="text-sm font-bold text-gray-400 mt-1">{results.to.name}</p>
+                                                <p className="text-sm font-bold text-gray-400 mt-1">{getStationDisplayName(results.to)}</p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    {/* Stats & Booking */}
+                                    {/* Fare & Booking */}
                                     <div className="w-full xl:w-64 flex flex-col md:flex-row xl:flex-col gap-6 items-center">
                                         <div className="flex-1 text-center md:text-left xl:text-center w-full">
-                                            <div className="flex items-center justify-center md:justify-start xl:justify-center gap-2 text-emerald-500 mb-1">
-                                                <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                                                <span className="font-black text-sm uppercase tracking-widest">{train.available_seats} SEATS LEFT</span>
-                                            </div>
                                             <p className="text-4xl font-black text-black tracking-tighter">
-                                                {train.fare.toFixed(2)} <span className="text-sm text-gray-400">EGP</span>
+                                                {(train.total_fare ?? train.fare_per_passenger ?? 0).toFixed(0)} <span className="text-sm text-gray-400">EGP</span>
                                             </p>
+                                            {passengers > 1 && (
+                                                <p className="text-xs text-gray-400 font-bold mt-1">
+                                                    {(train.fare_per_passenger ?? 0).toFixed(0)} EGP × {passengers}
+                                                </p>
+                                            )}
                                         </div>
                                         <button
                                             onClick={() => handleBooking(train)}

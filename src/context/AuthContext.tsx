@@ -7,7 +7,11 @@ interface User {
   national_id: string;
   full_name: string;
   email: string;
-  // Add other user fields as needed based on backend response
+  phone?: string;
+  gender?: string;
+  balance?: number;
+  card_id?: string;
+  role?: string;
 }
 
 interface AuthContextType {

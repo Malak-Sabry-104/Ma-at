@@ -155,6 +155,22 @@ const NavBar = () => {
                 >
                   {t("profile.title") || "Profile"}
                 </Link>
+                <Link
+                  to="/payment"
+                  onClick={() => setUserMenu(false)}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg text-black font-medium"
+                >
+                  💳 Top Up
+                </Link>
+                {(user?.role === "admin" || user?.role === "manager") && (
+                  <Link
+                    to="/admin"
+                    onClick={() => setUserMenu(false)}
+                    className="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg text-black font-medium"
+                  >
+                    ⚙️ Admin
+                  </Link>
+                )}
                 <button
                   onClick={() => {
                     logout();
@@ -232,15 +248,24 @@ const NavBar = () => {
 
                 <li className="w-full px-6 pt-4 flex flex-col gap-2">
                   {isAuthenticated ? (
-                    <button
-                      onClick={() => {
-                        logout();
-                        setIsOpen(false);
-                      }}
-                      className="block w-full text-center py-3 rounded-lg bg-red-500 text-white font-medium"
-                    >
-                      Logout
-                    </button>
+                    <>
+                      <button
+                        onClick={() => {
+                          logout();
+                          setIsOpen(false);
+                        }}
+                        className="block w-full text-center py-3 rounded-lg bg-red-500 text-white font-medium"
+                      >
+                        Logout
+                      </button>
+                      <Link
+                        to="/payment"
+                        className="block w-full text-center py-3 rounded-lg bg-black text-white font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        💳 Top Up
+                      </Link>
+                    </>
                   ) : (
                     <Link
                       to="/login"

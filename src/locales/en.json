@@ -38,7 +38,13 @@
         "Luxury": "Luxury",
         "Executive": "Executive",
         "Business": "Business",
-        "Economy": "Economy"
+        "Economy": "Economy",
+        "All": "All Classes",
+        "VIP": "VIP",
+        "Spanish": "Spanish",
+        "Russian": "Russian",
+        "Sleeping": "Sleeping",
+        "Talgo": "Talgo"
     },
     "about": {
         "whatIsMaat": "What is Ma’at?",

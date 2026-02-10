@@ -5,6 +5,8 @@ import ContactUs from "./Pages/ContactUs";
 import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import SearchResults from "./Pages/SearchResults";
+import Payment from "./Pages/Payment";
+import AdminDashboard from "./Pages/AdminDashboard";
 
 import Profile from "./Pages/Profile";
 
@@ -19,6 +21,8 @@ const App = () => {
         <Route element={<Register />} path="/register" />
         <Route element={<Profile />} path="/profile" />
         <Route element={<SearchResults />} path="/search-results" />
+        <Route element={<Payment />} path="/payment" />
+        <Route element={<AdminDashboard />} path="/admin" />
       </Routes>
     </>
   );

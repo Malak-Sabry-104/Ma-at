@@ -103,13 +103,13 @@ const Hero = () => {
   };
 
   const selectFromStation = (station: any) => {
-    setFrom(station.name);
+    setFrom(station.name_ar || station.name_en || station.name);
     setShowFromDropdown(false);
     setFromSuggestions([]);
   };
 
   const selectToStation = (station: any) => {
-    setTo(station.name);
+    setTo(station.name_ar || station.name_en || station.name);
     setShowToDropdown(false);
     setToSuggestions([]);
   };
@@ -137,24 +137,19 @@ const Hero = () => {
       return;
     }
 
-    setIsSearching(true);
-    try {
-      const searchParams = {
-        from,
-        to,
-        date: departureDate,
-        passengers: adults + infants,
-        ticketClass: selectedClass
-      };
+    // Build query params URL so the results page is shareable and refreshable
+    const params = new URLSearchParams({
+      from,
+      to,
+      date: departureDate,
+      passengers: String(adults + infants),
+    });
 
-      const response = await trainApi.searchTrains(searchParams);
-      navigate("/search-results", { state: { results: response.data.results, searchParams } });
-    } catch (error: any) {
-      console.error("Search error:", error);
-      setSearchError(error.response?.data?.error || "Failed to search trains");
-    } finally {
-      setIsSearching(false);
+    if (selectedClass && selectedClass !== "All") {
+      params.set("class", selectedClass);
     }
+
+    navigate(`/search-results?${params.toString()}`);
   };
 
   const buttonStyle = (type: TripType) =>
@@ -179,10 +174,10 @@ const Hero = () => {
     if (multiLegs.length === 1) return; // always keep at least one leg
     setMultiLegs(multiLegs.filter((_, i) => i !== index));
   };
-  const ticketClasses = ["Luxury", "Executive", "Business", "Economy"] as const;
+  const ticketClasses = ["All", "VIP", "Spanish", "Russian", "Sleeping", "Talgo"] as const;
   type TicketClass = (typeof ticketClasses)[number];
 
-  const [selectedClass, setSelectedClass] = useState<TicketClass>("Economy");
+  const [selectedClass, setSelectedClass] = useState<TicketClass>("All");
   return (
     <section id="hero" className="min-h-screen overflow-hidden">
       <div className="bg-black/30 min-h-screen py-12">
@@ -274,8 +269,8 @@ const Hero = () => {
                             onClick={() => selectFromStation(station)}
                             className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
                           >
-                            <div className="font-medium text-gray-900">{station.name}</div>
-                            <div className="text-sm text-gray-500">Code: {station.code} • Zone {station.zone}</div>
+                            <div className="font-medium text-gray-900">{station.name_ar || station.name}</div>
+                            <div className="text-sm text-gray-500">{station.name_en}</div>
                           </button>
                         ))
                       ) : (
@@ -332,8 +327,8 @@ const Hero = () => {
                             onClick={() => selectToStation(station)}
                             className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
                           >
-                            <div className="font-medium text-gray-900">{station.name}</div>
-                            <div className="text-sm text-gray-500">Code: {station.code} • Zone {station.zone}</div>
+                            <div className="font-medium text-gray-900">{station.name_ar || station.name}</div>
+                            <div className="text-sm text-gray-500">{station.name_en}</div>
                           </button>
                         ))
                       ) : (
