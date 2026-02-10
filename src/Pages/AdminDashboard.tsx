@@ -487,7 +487,7 @@ const BookingsTab = () => {
 // ===== Create User Modal =====
 const CreateUserModal = ({ onClose, onCreated }: { onClose: () => void; onCreated: () => void }) => {
     const [form, setForm] = useState({
-        national_id: "", full_name: "", email: "", phone: "", password: "", gender: "", card_uid: ""
+        national_id: "", full_name: "", email: "", phone: "", gender: "", card_uid: ""
     });
     const [unpairedCards, setUnpairedCards] = useState<NfcCard[]>([]);
     const [loading, setLoading] = useState(false);
@@ -501,8 +501,8 @@ const CreateUserModal = ({ onClose, onCreated }: { onClose: () => void; onCreate
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!form.national_id || !form.full_name || !form.password) {
-            setError("National ID, Full Name, and Password are required");
+        if (!form.national_id || !form.full_name) {
+            setError("National ID and Full Name are required");
             return;
         }
         setLoading(true);
@@ -528,7 +528,6 @@ const CreateUserModal = ({ onClose, onCreated }: { onClose: () => void; onCreate
                     <InputField label="Full Name *" value={form.full_name} onChange={(v) => setForm({ ...form, full_name: v })} />
                     <InputField label="Email" type="email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
                     <InputField label="Phone" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} />
-                    <InputField label="Password *" type="password" value={form.password} onChange={(v) => setForm({ ...form, password: v })} />
                     <div className="space-y-1">
                         <label className="text-xs font-bold text-gray-500 uppercase tracking-wider">Gender</label>
                         <select
