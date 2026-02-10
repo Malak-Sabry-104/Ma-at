@@ -6,6 +6,8 @@ import { Link, useLocation } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../context/AuthContext";
+import { FaCog, FaCreditCard } from "react-icons/fa";
+import { FaRegCreditCard } from "react-icons/fa6";
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
@@ -160,7 +162,7 @@ const NavBar = () => {
                   onClick={() => setUserMenu(false)}
                   className="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg text-black font-medium"
                 >
-                  💳 Top Up
+                  <FaRegCreditCard /> Top Up
                 </Link>
                 {(user?.role === "admin" || user?.role === "manager") && (
                   <Link
@@ -168,7 +170,7 @@ const NavBar = () => {
                     onClick={() => setUserMenu(false)}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-100 rounded-lg text-black font-medium"
                   >
-                    ⚙️ Admin
+                  <FaCog /> Admin
                   </Link>
                 )}
                 <button
@@ -263,7 +265,7 @@ const NavBar = () => {
                         className="block w-full text-center py-3 rounded-lg bg-black text-white font-medium"
                         onClick={() => setIsOpen(false)}
                       >
-                        💳 Top Up
+                        <FaRegCreditCard /> Top Up
                       </Link>
                     </>
                   ) : (
@@ -281,7 +283,7 @@ const NavBar = () => {
                       toggleLanguage();
                       setIsOpen(false);
                     }}
-                    className="block w-full text-center py-3 rounded-lg border border-white text-white font-medium"
+                    className="md:block hidden w-full text-center py-3 rounded-lg border border-white text-white font-medium"
                   >
                     {i18n.language === "ar" ? "English" : "العربية"}
                   </button>
