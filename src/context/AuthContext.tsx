@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import api from "../api/Axios";
+import api from "../api/axios";
 import { requestOtpLogin, verifyOtp, registerUser } from "../api/auth.api";
 
 interface User {
