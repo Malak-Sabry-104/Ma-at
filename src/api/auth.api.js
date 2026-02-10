@@ -19,3 +19,7 @@ export const requestOtpLogin = (national_id) => {
 export const verifyOtp = (national_id, otp) => {
   return api.post("/auth/verify", { national_id, otp });
 };
+
+export const updateUserProfile = (data) => {
+  return api.put("/auth/me", data);
+};

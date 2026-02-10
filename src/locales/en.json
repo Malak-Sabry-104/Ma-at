@@ -146,6 +146,38 @@
         "helloRegister": "Hello! Register to get started",
         "welcomeTo": "Welcome to",
         "maat": "Ma’at",
-        "welcomeSubtitle": "We help organize your train boarding smoothly and efficiently. Enjoy a comfortable and well-organized journey."
+        "welcomeSubtitle": "We help organize your train boarding smoothly and efficiently. Enjoy a comfortable and well-organized journey.",
+        "enterNationalId": "Enter National ID",
+        "nationalId": "National ID",
+        "enterOtp": "Enter OTP",
+        "verify": "Verify",
+        "fullName": "Full Name",
+        "phoneNumber": "Phone Number",
+        "cardId": "Card ID (Optional)"
+    },
+    "profile": {
+        "title": "My Profile",
+        "subtitle": "Manage your personal information",
+        "personalInfo": "Personal Information",
+        "qrCode": "QR Code",
+        "downloadQR": "Download QR Code",
+        "cardId": "Card ID",
+        "fullName": "Full Name",
+        "email": "Email",
+        "phone": "Phone",
+        "gender": "Gender",
+        "selectGender": "Select Gender",
+        "male": "Male",
+        "female": "Female",
+        "edit": "Edit Profile",
+        "updateSuccess": "Profile updated successfully",
+        "updateError": "Failed to update profile"
+    },
+    "common": {
+        "save": "Save Changes",
+        "cancel": "Cancel",
+        "edit": "Edit",
+        "loading": "Loading...",
+        "saving": "Saving..."
     }
 }

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { IoMdPerson } from "react-icons/io";
 import { FaArrowRight, FaExchangeAlt, FaPlus, FaTrash } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import * as trainApi from "../api/train.api";
 
 type TripType = "oneway" | "round" | "multicity";
 
@@ -13,6 +15,7 @@ interface Leg {
 
 const Hero = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [tripType, setTripType] = useState<TripType>("oneway");
 
   const [from, setFrom] = useState("");
@@ -28,11 +31,130 @@ const Hero = () => {
   const [adults, setAdults] = useState(1);
   const [infants, setInfants] = useState(0);
   const [swapped, setSwapped] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchError, setSearchError] = useState("");
+
+  // Autocomplete state
+  const [fromSuggestions, setFromSuggestions] = useState<any[]>([]);
+  const [toSuggestions, setToSuggestions] = useState<any[]>([]);
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [isLoadingFrom, setIsLoadingFrom] = useState(false);
+  const [isLoadingTo, setIsLoadingTo] = useState(false);
+  const fromInputRef = useRef<HTMLDivElement>(null);
+  const toInputRef = useRef<HTMLDivElement>(null);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const swapStations = () => {
     setFrom(to);
     setTo(from);
     setSwapped(!swapped);
+  };
+
+  // Debounced station search
+  const searchStations = async (query: string, type: 'from' | 'to') => {
+    if (!query || query.trim().length === 0) {
+      if (type === 'from') {
+        setFromSuggestions([]);
+        setShowFromDropdown(false);
+      } else {
+        setToSuggestions([]);
+        setShowToDropdown(false);
+      }
+      return;
+    }
+
+    if (type === 'from') setIsLoadingFrom(true);
+    else setIsLoadingTo(true);
+
+    try {
+      const response = await trainApi.searchStations(query);
+      const stations = response.data.stations || [];
+
+      if (type === 'from') {
+        setFromSuggestions(stations);
+        setShowFromDropdown(stations.length > 0);
+      } else {
+        setToSuggestions(stations);
+        setShowToDropdown(stations.length > 0);
+      }
+    } catch (error) {
+      console.error('Station search error:', error);
+    } finally {
+      if (type === 'from') setIsLoadingFrom(false);
+      else setIsLoadingTo(false);
+    }
+  };
+
+  const handleFromChange = (value: string) => {
+    setFrom(value);
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      searchStations(value, 'from');
+    }, 300);
+  };
+
+  const handleToChange = (value: string) => {
+    setTo(value);
+    if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+    debounceTimerRef.current = setTimeout(() => {
+      searchStations(value, 'to');
+    }, 300);
+  };
+
+  const selectFromStation = (station: any) => {
+    setFrom(station.name);
+    setShowFromDropdown(false);
+    setFromSuggestions([]);
+  };
+
+  const selectToStation = (station: any) => {
+    setTo(station.name);
+    setShowToDropdown(false);
+    setToSuggestions([]);
+  };
+
+  // Click outside to close dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (fromInputRef.current && !fromInputRef.current.contains(event.target as Node)) {
+        setShowFromDropdown(false);
+      }
+      if (toInputRef.current && !toInputRef.current.contains(event.target as Node)) {
+        setShowToDropdown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearch = async () => {
+    setSearchError("");
+
+    if (!from || !to || !departureDate) {
+      setSearchError("Please fill in all required fields");
+      return;
+    }
+
+    setIsSearching(true);
+    try {
+      const searchParams = {
+        from,
+        to,
+        date: departureDate,
+        passengers: adults + infants,
+        ticketClass: selectedClass
+      };
+
+      const response = await trainApi.searchTrains(searchParams);
+      navigate("/search-results", { state: { results: response.data.results, searchParams } });
+    } catch (error: any) {
+      console.error("Search error:", error);
+      setSearchError(error.response?.data?.error || "Failed to search trains");
+    } finally {
+      setIsSearching(false);
+    }
   };
 
   const buttonStyle = (type: TripType) =>
@@ -121,8 +243,9 @@ const Hero = () => {
                 justify-center gap-3"
               >
                 <div
+                  ref={fromInputRef}
                   className="input-wrapper p-2 md:w-[300px]
-                 w-[100%] flex flex-col"
+                 w-[100%] flex flex-col relative"
                 >
                   <label htmlFor="from" className="mb-2">
                     {t("hero.from")}
@@ -134,8 +257,34 @@ const Hero = () => {
                      rounded-lg focus:outline-0"
                     placeholder={t("hero.from")}
                     value={from}
-                    onChange={(e) => setFrom(e.target.value)}
+                    onChange={(e) => handleFromChange(e.target.value)}
+                    onFocus={() => from && searchStations(from, 'from')}
+                    autoComplete="off"
                   />
+                  {showFromDropdown && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-60 overflow-y-auto">
+                      {isLoadingFrom ? (
+                        <div className="p-4 text-center text-gray-500">
+                          <div className="inline-block w-5 h-5 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+                        </div>
+                      ) : fromSuggestions.length > 0 ? (
+                        fromSuggestions.map((station) => (
+                          <button
+                            key={station.id}
+                            onClick={() => selectFromStation(station)}
+                            className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
+                          >
+                            <div className="font-medium text-gray-900">{station.name}</div>
+                            <div className="text-sm text-gray-500">Code: {station.code} • Zone {station.zone}</div>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="p-4 text-center text-gray-500 text-sm">
+                          No stations found
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <button
@@ -152,8 +301,9 @@ const Hero = () => {
                 </button>
 
                 <div
+                  ref={toInputRef}
                   className="input-wrapper p-2 md:w-[300px]
-                 w-[100%] flex flex-col"
+                 w-[100%] flex flex-col relative"
                 >
                   <label htmlFor="to" className="mb-2">
                     {t("hero.to")}
@@ -165,8 +315,34 @@ const Hero = () => {
                      p-2 rounded-lg focus:outline-0"
                     placeholder={t("hero.to")}
                     value={to}
-                    onChange={(e) => setTo(e.target.value)}
+                    onChange={(e) => handleToChange(e.target.value)}
+                    onFocus={() => to && searchStations(to, 'to')}
+                    autoComplete="off"
                   />
+                  {showToDropdown && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 max-h-60 overflow-y-auto">
+                      {isLoadingTo ? (
+                        <div className="p-4 text-center text-gray-500">
+                          <div className="inline-block w-5 h-5 border-2 border-gray-300 border-t-black rounded-full animate-spin"></div>
+                        </div>
+                      ) : toSuggestions.length > 0 ? (
+                        toSuggestions.map((station) => (
+                          <button
+                            key={station.id}
+                            onClick={() => selectToStation(station)}
+                            className="w-full text-left px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0"
+                          >
+                            <div className="font-medium text-gray-900">{station.name}</div>
+                            <div className="text-sm text-gray-500">Code: {station.code} • Zone {station.zone}</div>
+                          </button>
+                        ))
+                      ) : (
+                        <div className="p-4 text-center text-gray-500 text-sm">
+                          No stations found
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div
@@ -458,11 +634,13 @@ const Hero = () => {
                   ))}
                 </div>
                 <button
+                  onClick={handleSearch}
+                  disabled={isSearching}
                   className="flex  items-center gap-2 
                   justify-center cursor-pointer bg-black rounded-lg
-     text-white  p-3 md:w-40  w-full"
+     text-white  p-3 md:w-40  w-full disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {t("hero.search")} <FaArrowRight className="rtl:rotate-180" />
+                  {isSearching ? "Searching..." : t("hero.search")} {!isSearching && <FaArrowRight className="rtl:rotate-180" />}
                 </button>
               </div>
             </div>
