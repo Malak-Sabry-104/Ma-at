@@ -42,7 +42,7 @@ To create a smoother, more organized, and human-centered train travel experience
 * Real-time train updates and schedules
 * Improved trip planning and reduced uncertainty
 
-### 🛠️ Admin Dashboard
+### Admin Dashboard
 
 * Full system control and management:
 
@@ -54,7 +54,7 @@ To create a smoother, more organized, and human-centered train travel experience
 
 ---
 
-## 🎯 Goals
+## Goals
 
 * **Reduce Congestion**
   Minimize crowding near train doors
@@ -70,7 +70,7 @@ To create a smoother, more organized, and human-centered train travel experience
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 1. Sensors collect real-time passenger movement data
 2. Data is processed and analyzed
@@ -97,7 +97,7 @@ To create a smoother, more organized, and human-centered train travel experience
 
 ---
 
-## 🖥️ User Experience
+##  User Experience
 
 * Modern, responsive design
 * Fast and smooth performance
