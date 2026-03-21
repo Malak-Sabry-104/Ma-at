@@ -79,7 +79,7 @@ To create a smoother, more organized, and human-centered train travel experience
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 
@@ -107,7 +107,7 @@ To create a smoother, more organized, and human-centered train travel experience
 ---
 
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License.
 
