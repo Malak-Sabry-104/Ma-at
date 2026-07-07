@@ -1,4 +1,4 @@
-import api from "./axios";
+import api from "./Axios";
 
 export const topUp = (amount) => {
     return api.post("/users/me/top-up", { amount });

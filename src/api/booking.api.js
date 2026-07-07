@@ -1,4 +1,4 @@
-import api from "./axios";
+import api from "./Axios";
 
 export const createBooking = (trainId, passengers, searchParams) => {
     return api.post("/bookings", { trainId, passengers, searchParams });
